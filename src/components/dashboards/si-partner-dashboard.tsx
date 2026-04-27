@@ -119,10 +119,10 @@ export function SIPartnerDashboard() {
                     </div>
                     <div>
                       <p className="font-bold">{badge.name}</p>
-                      <p className="text-xs text-muted-foreground flex items-center gap-1">
+                      <div className="text-xs text-muted-foreground flex items-center gap-1">
                         Expires: {badge.expiry} 
                         {badge.warning && <Badge variant="destructive" className="h-4 text-[8px] px-1">Expiring Soon</Badge>}
-                      </p>
+                      </div>
                     </div>
                   </CardContent>
                 </Card>
