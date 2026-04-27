@@ -11,6 +11,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
+import { useRole } from '@/context/role-context';
 import { ArrowLeft, Loader2 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -27,6 +28,7 @@ type BuyerSignupValues = z.infer<typeof buyerSignupSchema>;
 
 export default function BuyerSignupPage() {
   const { toast } = useToast();
+  const { setRole } = useRole();
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = React.useState(false);
 
@@ -51,6 +53,7 @@ export default function BuyerSignupPage() {
         toast({ title: "등록 실패", description: "중복된 이메일 주소입니다.", variant: "destructive" });
       } else {
         localStorage.setItem('rolehub_logged_in', 'true');
+        setRole('BUYER');
         toast({ title: "가입 성공!", description: `${data.companyName}님 환영합니다!` });
         router.push('/');
       }
@@ -172,7 +175,7 @@ export default function BuyerSignupPage() {
           </Form>
         </CardContent>
         <CardFooter className="flex justify-center border-t p-6 bg-slate-50/50">
-          <p className="text-sm text-muted-foreground">이미 계정이 있으신가요? <Link href="/signup/buyer" className="text-primary font-bold hover:underline">로그인</Link></p>
+          <p className="text-sm text-muted-foreground">이미 계정이 있으신가요? <Link href="/login" className="text-primary font-bold hover:underline">로그인</Link></p>
         </CardFooter>
       </Card>
     </div>

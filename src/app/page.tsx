@@ -38,18 +38,18 @@ export default function HomePage() {
       <div className="min-h-screen bg-slate-50 flex flex-col">
         {/* Simple Landing Header */}
         <header className="h-20 border-b bg-white flex items-center justify-between px-8 lg:px-20 sticky top-0 z-50">
-           <div className="flex items-center gap-2 font-bold text-2xl text-primary">
+           <Link href="/" className="flex items-center gap-2 font-bold text-2xl text-primary">
               <div className="size-10 bg-primary rounded-xl flex items-center justify-center shadow-lg shadow-primary/20">
                 <LayoutDashboard className="text-white size-6" />
               </div>
               <span className="font-headline tracking-tight">RoleHub Connect</span>
-           </div>
+           </Link>
            <div className="flex items-center gap-4">
-             <Link href="/signup/buyer">
+             <Link href="/login">
                <Button variant="ghost" className="font-bold hidden sm:flex">로그인</Button>
              </Link>
              <Link href="/signup/buyer">
-               <Button className="font-bold rounded-xl px-6 shadow-md">시작하기</Button>
+               <Button className="font-bold rounded-xl px-6 shadow-md">무료로 시작하기</Button>
              </Link>
            </div>
         </header>
@@ -69,14 +69,16 @@ export default function HomePage() {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto animate-fade-in" style={{ animationDelay: '0.2s' }}>
-            <Link href="/signup/buyer">
+            <Link href="/login">
               <Button size="lg" className="h-16 px-10 rounded-2xl text-lg font-bold gap-2 shadow-2xl shadow-primary/30 w-full sm:w-auto hover:scale-105 transition-transform">
-                수요기업으로 가입하기 <ArrowRight className="size-5" />
+                로그인하여 시작하기 <ArrowRight className="size-5" />
               </Button>
             </Link>
-            <Button size="lg" variant="outline" className="h-16 px-10 rounded-2xl text-lg font-bold border-2 w-full sm:w-auto bg-white">
-              파트너십 문의
-            </Button>
+            <Link href="/signup/buyer">
+              <Button size="lg" variant="outline" className="h-16 px-10 rounded-2xl text-lg font-bold border-2 w-full sm:w-auto bg-white hover:bg-slate-50">
+                수요기업 회원가입
+              </Button>
+            </Link>
           </div>
 
           {/* Features Grid */}
