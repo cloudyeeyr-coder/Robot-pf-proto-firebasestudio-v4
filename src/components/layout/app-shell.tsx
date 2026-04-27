@@ -1,4 +1,3 @@
-
 "use client"
 
 import React from 'react';
@@ -95,8 +94,8 @@ export function AppShell({ children }: AppShellProps) {
       <div className="flex min-h-screen w-full">
         <Sidebar collapsible="icon" className="border-r border-sidebar-border bg-sidebar">
           <SidebarHeader className="h-16 flex items-center px-4 border-b border-sidebar-border">
-            <Link href="/" className="flex items-center gap-2 font-bold text-xl text-primary">
-              <div className="size-8 bg-primary rounded-lg flex items-center justify-center">
+            <Link href="/" className="flex items-center gap-2 font-bold text-xl text-zinc-950">
+              <div className="size-8 bg-zinc-950 rounded-lg flex items-center justify-center">
                 <LayoutDashboard className="text-white size-5" />
               </div>
               <span className="group-data-[collapsible=icon]:hidden font-headline">RoleHub</span>
@@ -176,7 +175,7 @@ export function AppShell({ children }: AppShellProps) {
 
               <Button variant="ghost" size="icon" className="relative rounded-full">
                 <Bell className="size-5" />
-                <span className="absolute top-2.5 right-2.5 size-2 bg-destructive rounded-full border-2 border-white" />
+                <span className="absolute top-2.5 right-2.5 size-2 bg-zinc-950 rounded-full border-2 border-white" />
               </Button>
 
               <DropdownMenu>
@@ -221,9 +220,9 @@ export function AppShell({ children }: AppShellProps) {
           <footer className="border-t border-border bg-white p-4 flex flex-col sm:flex-row items-center justify-between text-xs text-muted-foreground gap-2">
             <div>&copy; 2024 RoleHub Connect. All rights reserved.</div>
             <div className="flex gap-4">
-              <Link href="#" className="hover:text-primary">Privacy Policy</Link>
-              <Link href="#" className="hover:text-primary">Terms of Service</Link>
-              <Link href="#" className="hover:text-primary">Support</Link>
+              <Link href="#" className="hover:text-zinc-950">Privacy Policy</Link>
+              <Link href="#" className="hover:text-zinc-950">Terms of Service</Link>
+              <Link href="#" className="hover:text-zinc-950">Support</Link>
             </div>
           </footer>
         </main>

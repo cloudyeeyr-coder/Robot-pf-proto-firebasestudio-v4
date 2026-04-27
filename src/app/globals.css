@@ -5,12 +5,12 @@
 @layer base {
   :root {
     --background: 0 0% 100%; /* Pure white */
-    --foreground: 240 10% 3.9%; /* Near black */
+    --foreground: 240 10% 3.9%; /* Zinc 950 */
     --card: 0 0% 100%;
     --card-foreground: 240 10% 3.9%;
     --popover: 0 0% 100%;
     --popover-foreground: 240 10% 3.9%;
-    --primary: 358 80% 51%; /* ROBOTIS Red: #E61E28 */
+    --primary: 240 10% 3.9%; /* Zinc 950 */
     --primary-foreground: 0 0% 100%;
     --secondary: 240 4.8% 95.9%;
     --secondary-foreground: 240 5.9% 10%;
@@ -18,25 +18,25 @@
     --muted-foreground: 240 3.8% 46.1%;
     --accent: 240 4.8% 95.9%;
     --accent-foreground: 240 5.9% 10%;
-    --destructive: 0 84.2% 60.2%;
+    --destructive: 0 0% 0%; /* Black for consistency */
     --destructive-foreground: 0 0% 98%;
     --border: 240 5.9% 90%;
     --input: 240 5.9% 90%;
-    --ring: 358 80% 51%;
-    --chart-1: 358 80% 51%;
-    --chart-2: 240 10% 10%;
+    --ring: 240 10% 3.9%;
+    --chart-1: 240 10% 3.9%;
+    --chart-2: 240 5% 64.9%;
     --chart-3: 0 0% 80%;
-    --chart-4: 358 80% 70%;
-    --chart-5: 240 5% 30%;
-    --radius: 0.5rem; /* Sharper corners for industrial feel */
+    --chart-4: 240 5% 30%;
+    --chart-5: 240 5% 50%;
+    --radius: 0.5rem;
     --sidebar-background: 0 0% 100%;
     --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 358 80% 51%;
+    --sidebar-primary: 240 10% 3.9%;
     --sidebar-primary-foreground: 0 0% 98%;
     --sidebar-accent: 240 4.8% 95.9%;
     --sidebar-accent-foreground: 240 5.9% 10%;
     --sidebar-border: 240 5.9% 90%;
-    --sidebar-ring: 358 80% 51%;
+    --sidebar-ring: 240 10% 3.9%;
   }
 }
 
@@ -54,17 +54,17 @@
 }
 
 .role-gradient-admin {
-  @apply bg-zinc-900 text-white;
+  @apply bg-zinc-950 text-white;
 }
 
 .role-gradient-manufacturer {
-  @apply bg-red-600 text-white;
-}
-
-.role-gradient-partner {
   @apply bg-zinc-800 text-white;
 }
 
+.role-gradient-partner {
+  @apply bg-zinc-900 text-white;
+}
+
 .role-gradient-buyer {
-  @apply bg-white text-zinc-900 border-2 border-zinc-900;
+  @apply bg-white text-zinc-950 border-2 border-zinc-950;
 }
