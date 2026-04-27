@@ -1,3 +1,4 @@
+
 "use client"
 
 import React, { useState } from 'react';
@@ -28,6 +29,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useToast } from '@/hooks/use-toast';
 import { MOCK_SI_PARTNERS, MOCK_PROPOSALS } from '@/lib/mock-data';
+import { cn } from '@/lib/utils';
 
 export function ManufacturerDashboard() {
   const { toast } = useToast();
