@@ -8,7 +8,7 @@ import { MOCK_CONTRACTS } from '@/lib/mock-data';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { ShieldCheck, Download, Printer, AlertCircle, ArrowLeft, Loader2, FileText } from 'lucide-react';
+import { ShieldCheck, Download, Printer, AlertCircle, ArrowLeft, Loader2, FileText, CheckCircle2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import jsPDF from 'jspdf';
 
