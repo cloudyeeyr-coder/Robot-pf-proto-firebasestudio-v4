@@ -1,25 +1,16 @@
+
 "use client"
 
 import React from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { 
   LayoutDashboard, 
-  Package, 
   FileText, 
-  Users, 
-  Settings, 
   LogOut, 
   Search,
-  MessageSquare,
-  ShieldCheck,
-  Factory,
-  Briefcase,
-  History,
-  Menu,
   ChevronDown,
-  Bell,
-  Sparkles
+  Bell
 } from 'lucide-react';
 import { useRole, UserRole } from '@/context/role-context';
 import { cn } from '@/lib/utils';
@@ -54,47 +45,53 @@ interface AppShellProps {
 export function AppShell({ children }: AppShellProps) {
   const { role, setRole } = useRole();
   const pathname = usePathname();
+  const router = useRouter();
+
+  const handleSignOut = () => {
+    localStorage.removeItem('rolehub_logged_in');
+    router.push('/login');
+    router.refresh();
+  };
 
   const getNavItems = (role: UserRole) => {
     const common = [
       { name: 'Dashboard', href: '/', icon: LayoutDashboard },
-      { name: 'Messages', href: '/messages', icon: MessageSquare },
     ];
 
     switch (role) {
       case 'ADMIN':
         return [
           ...common,
-          { name: 'User Management', href: '/admin/users', icon: Users },
-          { name: 'Platform Stats', href: '/admin/stats', icon: ShieldCheck },
-          { name: 'Settings', href: '/settings', icon: Settings },
         ];
       case 'MANUFACTURER':
         return [
           ...common,
-          { name: 'Production', href: '/manufacturer/production', icon: Factory },
-          { name: 'AS History', href: '/manufacturer/service', icon: History },
-          { name: 'Inventory', href: '/manufacturer/inventory', icon: Package },
         ];
       case 'SI_PARTNER':
         return [
           ...common,
-          { name: 'Proposals', href: '/si-partner/proposals', icon: FileText },
-          { name: 'Projects', href: '/si-partner/projects', icon: Briefcase },
-          { name: 'AI Assistance', href: '/si-partner/ai-tools', icon: Sparkles },
         ];
       case 'BUYER':
       default:
         return [
           ...common,
-          { name: 'Search Catalog', href: '/buyer/search', icon: Search },
-          { name: 'Purchase History', href: '/buyer/orders', icon: History },
-          { name: 'Contracts', href: '/buyer/contracts', icon: FileText },
+          { name: 'SI Directory', href: '/search', icon: Search },
+          { name: 'My Contracts', href: '/buyer/contracts', icon: FileText },
         ];
     }
   };
 
   const navItems = getNavItems(role);
+
+  const getPageTitle = () => {
+    if (pathname === '/') return 'Dashboard';
+    if (pathname === '/search') return 'SI Partner Directory';
+    if (pathname === '/buyer/contracts') return 'My Contracts';
+    if (pathname.includes('/contracts/') && pathname.includes('/payment')) return 'Escrow Payment';
+    if (pathname.includes('/contracts/') && pathname.includes('/warranty')) return 'Warranty Management';
+    if (pathname.startsWith('/search/')) return 'Partner Profile';
+    return 'RoleHub';
+  };
 
   return (
     <SidebarProvider>
@@ -129,7 +126,7 @@ export function AppShell({ children }: AppShellProps) {
           <SidebarFooter className="p-4 border-t border-sidebar-border">
              <SidebarMenu>
                 <SidebarMenuItem>
-                  <SidebarMenuButton className="w-full justify-start gap-3">
+                  <SidebarMenuButton className="w-full justify-start gap-3" onClick={handleSignOut}>
                     <LogOut className="size-5 text-muted-foreground" />
                     <span className="group-data-[collapsible=icon]:hidden">Sign Out</span>
                   </SidebarMenuButton>
@@ -139,20 +136,20 @@ export function AppShell({ children }: AppShellProps) {
           <SidebarRail />
         </Sidebar>
 
-        <main className="flex-1 flex flex-col min-w-0">
+        <main className="flex-1 flex flex-col min-w-0 bg-slate-50/50">
           <header className="h-16 border-b border-border bg-white/80 backdrop-blur-md sticky top-0 z-30 flex items-center justify-between px-4 lg:px-8">
             <div className="flex items-center gap-4">
               <SidebarTrigger />
               <div className="h-6 w-px bg-border hidden sm:block" />
               <h1 className="font-semibold text-lg truncate max-w-[200px] sm:max-w-none">
-                {pathname === '/' ? 'Home' : pathname.split('/').pop()?.replace('-', ' ').toUpperCase()}
+                {getPageTitle()}
               </h1>
             </div>
 
             <div className="flex items-center gap-2 sm:gap-4">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="outline" size="sm" className="hidden sm:flex gap-2">
+                  <Button variant="outline" size="sm" className="hidden sm:flex gap-2 rounded-xl">
                     <Badge variant="secondary" className="font-mono text-[10px] uppercase">
                       {role.replace('_', ' ')}
                     </Badge>
@@ -169,9 +166,9 @@ export function AppShell({ children }: AppShellProps) {
                 </DropdownMenuContent>
               </DropdownMenu>
 
-              <Button variant="ghost" size="icon" className="relative">
+              <Button variant="ghost" size="icon" className="relative rounded-full">
                 <Bell className="size-5" />
-                <span className="absolute top-2 right-2 size-2 bg-destructive rounded-full border-2 border-white" />
+                <span className="absolute top-2.5 right-2.5 size-2 bg-destructive rounded-full border-2 border-white" />
               </Button>
 
               <DropdownMenu>
@@ -196,7 +193,7 @@ export function AppShell({ children }: AppShellProps) {
                   <DropdownMenuItem>Profile</DropdownMenuItem>
                   <DropdownMenuItem>Settings</DropdownMenuItem>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem className="text-destructive">Log out</DropdownMenuItem>
+                  <DropdownMenuItem className="text-destructive" onClick={handleSignOut}>Log out</DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
@@ -209,9 +206,9 @@ export function AppShell({ children }: AppShellProps) {
           <footer className="border-t border-border bg-white p-4 flex flex-col sm:flex-row items-center justify-between text-xs text-muted-foreground gap-2">
             <div>&copy; 2024 RoleHub Connect. All rights reserved.</div>
             <div className="flex gap-4">
-              <Link href="/privacy" className="hover:text-primary">Privacy Policy</Link>
-              <Link href="/terms" className="hover:text-primary">Terms of Service</Link>
-              <Link href="/support" className="hover:text-primary">Support</Link>
+              <Link href="#" className="hover:text-primary">Privacy Policy</Link>
+              <Link href="#" className="hover:text-primary">Terms of Service</Link>
+              <Link href="#" className="hover:text-primary">Support</Link>
             </div>
           </footer>
         </main>
