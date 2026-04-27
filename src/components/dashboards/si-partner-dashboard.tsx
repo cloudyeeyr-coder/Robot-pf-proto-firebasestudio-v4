@@ -63,36 +63,36 @@ export function SIPartnerDashboard() {
   };
 
   return (
-    <div className="space-y-8">
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <div>
-          <h2 className="text-3xl font-bold tracking-tight">SI Partner Hub</h2>
-          <p className="text-muted-foreground">Manage your proposals and leverage AI for better content.</p>
+    <div className="max-w-7xl mx-auto px-6 py-12 space-y-12">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
+        <div className="space-y-1">
+          <h2 className="text-3xl font-semibold tracking-tight text-ink-primary">SI Partner Hub</h2>
+          <p className="text-sm text-ink-muted">Manage your proposals and leverage AI for high-impact content.</p>
         </div>
-        <div className="flex gap-2">
-          <Button variant="outline" className="gap-2"><Briefcase className="size-4" /> My Projects</Button>
+        <div className="flex gap-4">
+          <Button variant="secondary" className="gap-2"><Briefcase className="size-4" /> My Projects</Button>
           <Button className="gap-2"><Plus className="size-4" /> New Proposal</Button>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
-        <div className="xl:col-span-2 space-y-8">
-          <section className="space-y-4">
-            <h3 className="text-xl font-bold flex items-center gap-2">
-              <Bell className="size-5 text-primary" /> Incoming Proposals
+      <div className="grid grid-cols-1 xl:grid-cols-3 gap-12">
+        <div className="xl:col-span-2 space-y-12">
+          <section className="space-y-6">
+            <h3 className="text-xl font-medium flex items-center gap-2 text-ink-primary">
+              <Bell className="size-5 text-primary-600" /> Incoming Proposals
             </h3>
             <div className="grid grid-cols-1 gap-4">
               {proposals.filter(p => p.status === 'pending').map((p) => (
-                <Card key={p.id} className="border-none shadow-sm hover:shadow-md transition-all">
-                  <CardContent className="p-6">
-                    <div className="flex flex-col md:flex-row justify-between gap-4">
-                      <div className="space-y-2">
-                        <Badge variant="secondary" className="mb-2">{p.manufacturer}</Badge>
-                        <h4 className="text-lg font-bold">{p.title}</h4>
-                        <p className="text-sm text-muted-foreground line-clamp-2">{p.description}</p>
+                <Card key={p.id} className="border-ink-border">
+                  <CardContent className="p-8">
+                    <div className="flex flex-col md:flex-row justify-between gap-8">
+                      <div className="space-y-3">
+                        <Badge variant="secondary" className="bg-ink-surface text-ink-primary border-none uppercase text-[10px] tracking-wider">{p.manufacturer}</Badge>
+                        <h4 className="text-lg font-medium text-ink-primary">{p.title}</h4>
+                        <p className="text-sm text-ink-muted line-clamp-2 leading-relaxed">{p.description}</p>
                       </div>
-                      <div className="flex items-end gap-2 shrink-0">
-                        <Button variant="outline" size="sm" onClick={() => handleAction(p, 'reject')}>Reject</Button>
+                      <div className="flex items-end gap-3 shrink-0">
+                        <Button variant="secondary" size="sm" onClick={() => handleAction(p, 'reject')}>Reject</Button>
                         <Button size="sm" onClick={() => handleAction(p, 'accept')}>Accept</Button>
                       </div>
                     </div>
@@ -102,26 +102,26 @@ export function SIPartnerDashboard() {
             </div>
           </section>
 
-          <section className="space-y-4">
-            <h3 className="text-xl font-bold">Certification Status</h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <section className="space-y-6">
+            <h3 className="text-xl font-medium text-ink-primary">Certification Status</h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               {[
                 { name: 'Platinum Partner', expiry: '2024-03-28', warning: true },
                 { name: 'Security Verified', expiry: '2025-01-10', warning: false },
               ].map((badge, i) => (
-                <Card key={i} className={cn("relative overflow-hidden", badge.warning && "border-amber-200 bg-amber-50")}>
-                  <CardContent className="p-6 flex items-center gap-4">
+                <Card key={i} className={cn("relative p-2 border-ink-border", badge.warning && "bg-warning/5 border-warning/20")}>
+                  <CardContent className="p-6 flex items-center gap-6">
                     <div className={cn(
-                      "size-12 rounded-xl flex items-center justify-center",
-                      badge.warning ? "bg-amber-100 text-amber-600" : "bg-primary/10 text-primary"
+                      "size-12 rounded-xl flex items-center justify-center border",
+                      badge.warning ? "bg-warning/10 text-warning border-warning/20" : "bg-primary-50 text-primary-600 border-primary-100"
                     )}>
                       <ShieldCheck className="size-6" />
                     </div>
                     <div>
-                      <p className="font-bold">{badge.name}</p>
-                      <div className="text-xs text-muted-foreground flex items-center gap-1">
+                      <p className="font-medium text-ink-primary">{badge.name}</p>
+                      <div className="text-xs text-ink-muted flex items-center gap-2 font-mono">
                         Expires: {badge.expiry} 
-                        {badge.warning && <Badge variant="destructive" className="h-4 text-[8px] px-1">Expiring Soon</Badge>}
+                        {badge.warning && <Badge variant="danger" className="h-4 text-[8px] px-1 border-none uppercase">Expiring Soon</Badge>}
                       </div>
                     </div>
                   </CardContent>
@@ -131,32 +131,33 @@ export function SIPartnerDashboard() {
           </section>
         </div>
 
-        <div className="space-y-8">
+        <aside className="space-y-8">
           <AIAssistanceCard />
-        </div>
+        </aside>
       </div>
 
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-        <DialogContent>
+        <DialogContent className="rounded-xl border-ink-border">
           <DialogHeader>
             <DialogTitle>{actionType === 'accept' ? 'Accept Proposal' : 'Reject Proposal'}</DialogTitle>
-            <DialogDescription>
+            <DialogDescription className="text-ink-muted">
               {actionType === 'accept' 
                 ? 'Are you ready to begin integration for this project? This will notify the manufacturer.'
                 : 'Please provide a reason for rejecting this proposal.'}
             </DialogDescription>
           </DialogHeader>
           {actionType === 'reject' && (
-            <div className="py-4">
+            <div className="py-6">
               <Textarea 
                 placeholder="e.g., Resource constraints for the requested timeline..." 
                 value={reason} 
                 onChange={(e) => setReason(e.target.value)}
+                className="bg-ink-canvas"
               />
             </div>
           )}
           <DialogFooter>
-            <Button variant="outline" onClick={() => setIsModalOpen(false)}>Cancel</Button>
+            <Button variant="secondary" onClick={() => setIsModalOpen(false)}>Cancel</Button>
             <Button onClick={confirmAction}>Confirm</Button>
           </DialogFooter>
         </DialogContent>

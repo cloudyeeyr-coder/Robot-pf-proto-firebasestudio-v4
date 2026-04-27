@@ -17,51 +17,53 @@ interface SiPartnerCardProps {
 
 export function SiPartnerCard({ partner }: SiPartnerCardProps) {
   return (
-    <Card className="group hover:border-primary/40 hover:shadow-lg transition-all border-border/50">
-      <CardHeader className="pb-3">
-        <div className="flex justify-between items-start">
+    <Card className="group hover:border-primary-400 border-ink-border transition-colors duration-150">
+      <CardHeader className="p-6 pb-4">
+        <div className="flex justify-between items-start gap-4">
           <div className="space-y-1">
             <div className="flex items-center gap-2">
-              <CardTitle className="text-xl font-bold truncate max-w-[180px]">{partner.name}</CardTitle>
+              <CardTitle className="text-lg font-medium text-ink-primary truncate max-w-[200px]">{partner.name}</CardTitle>
               {partner.hasBadge && (
-                <ShieldCheck className="size-4 text-emerald-500 fill-emerald-50" />
+                <Badge variant="manufacturer" className="h-5 px-1.5 border-none">
+                  <ShieldCheck className="size-3" />
+                </Badge>
               )}
             </div>
-            <div className="flex items-center text-sm text-muted-foreground gap-1">
+            <div className="flex items-center text-xs text-ink-muted gap-1 font-medium uppercase tracking-wider">
               <MapPin className="size-3" />
               {partner.region}
             </div>
           </div>
-          <Badge variant={partner.tier === 'Gold' ? 'default' : partner.tier === 'Silver' ? 'secondary' : 'outline'} className="font-bold">
+          <Badge variant={partner.tier === 'Gold' ? 'default' : 'secondary'} className="text-[10px] font-semibold uppercase tracking-wider">
             {partner.tier}
           </Badge>
         </div>
       </CardHeader>
-      <CardContent className="space-y-4">
-        <div className="space-y-1.5">
-          <div className="flex justify-between text-xs font-bold uppercase tracking-wider text-muted-foreground">
+      <CardContent className="p-6 pt-0 space-y-6">
+        <div className="space-y-2">
+          <div className="flex justify-between text-[10px] font-semibold uppercase tracking-widest text-ink-muted">
             <span>Success Rate</span>
-            <span className="text-primary">{partner.successRate}%</span>
+            <span className="text-primary-600 font-mono">{partner.successRate}%</span>
           </div>
-          <Progress value={partner.successRate} className="h-2" />
+          <Progress value={partner.successRate} className="h-1.5 bg-ink-surface" />
         </div>
 
         <div className="flex flex-wrap gap-1.5">
-          {partner.tags.map((tag) => (
-            <Badge key={tag} variant="secondary" className="text-[10px] bg-slate-100 font-medium">
+          {partner.tags.slice(0, 3).map((tag) => (
+            <Badge key={tag} variant="outline" className="text-[10px] bg-white border-ink-border text-ink-muted font-medium">
               {tag}
             </Badge>
           ))}
         </div>
 
-        <div className="flex items-center justify-between pt-2 border-t">
-          <div className="flex items-center gap-1">
-            <Star className="size-4 fill-amber-400 text-amber-400" />
-            <span className="text-sm font-bold">{partner.rating}</span>
+        <div className="flex items-center justify-between pt-4 border-t border-ink-border">
+          <div className="flex items-center gap-1.5">
+            <Star className="size-4 fill-warning text-warning" />
+            <span className="text-sm font-semibold font-mono text-ink-primary">{partner.rating}</span>
           </div>
           <Link href={`/search/${partner.id}`}>
-            <Button variant="ghost" size="sm" className="gap-1 group-hover:text-primary">
-              View Profile <ArrowRight className="size-3 group-hover:translate-x-1 transition-transform" />
+            <Button variant="ghost" size="sm" className="h-8 px-2 text-xs font-medium text-ink-muted group-hover:text-primary-600 transition-colors">
+              View Profile <ArrowRight className="size-3 ml-1 group-hover:translate-x-1 transition-transform" />
             </Button>
           </Link>
         </div>

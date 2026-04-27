@@ -24,9 +24,9 @@ export default function PaymentInfoPage() {
   if (role !== 'BUYER' && role !== 'ADMIN') {
     return (
       <AppShell>
-        <div className="flex flex-col items-center justify-center h-[60vh] gap-4">
-          <AlertCircle className="size-12 text-destructive" />
-          <h2 className="text-2xl font-bold">Access Denied</h2>
+        <div className="flex flex-col items-center justify-center h-[60vh] gap-6 max-w-7xl mx-auto px-6 py-12">
+          <AlertCircle className="size-12 text-danger" />
+          <h2 className="text-2xl font-medium tracking-tight">Access Denied</h2>
           <Button onClick={() => router.push('/')}>Go back home</Button>
         </div>
       </AppShell>
@@ -36,7 +36,7 @@ export default function PaymentInfoPage() {
   if (!contract || !tx) {
     return (
       <AppShell>
-        <div className="text-center py-20">Contract not found.</div>
+        <div className="max-w-7xl mx-auto px-6 py-24 text-center text-ink-muted">Contract not found.</div>
       </AppShell>
     );
   }
@@ -48,72 +48,72 @@ export default function PaymentInfoPage() {
 
   return (
     <AppShell>
-      <div className="max-w-3xl mx-auto space-y-8">
+      <div className="max-w-3xl mx-auto px-6 py-12 space-y-12">
         <div className="flex items-center gap-4">
-          <Button variant="ghost" size="icon" onClick={() => router.back()}>
+          <Button variant="ghost" size="icon" onClick={() => router.back()} className="text-ink-muted">
             <ArrowLeft className="size-5" />
           </Button>
-          <h1 className="text-3xl font-extrabold tracking-tight">Escrow Payment</h1>
+          <h1 className="text-3xl font-semibold tracking-tight text-ink-primary">Escrow Payment</h1>
         </div>
 
         <Card>
           <CardHeader>
             <div className="flex justify-between items-start">
-              <div>
-                <CardTitle>{contract.title}</CardTitle>
-                <CardDescription>{contract.partnerName}</CardDescription>
+              <div className="space-y-1">
+                <CardTitle className="text-lg font-medium">{contract.title}</CardTitle>
+                <CardDescription className="text-sm text-ink-muted">{contract.partnerName}</CardDescription>
               </div>
               <Badge variant="outline">Pending Payment</Badge>
             </div>
           </CardHeader>
-          <CardContent className="grid grid-cols-2 gap-4 py-4 border-y">
+          <CardContent className="grid grid-cols-2 gap-8 py-6 border-y border-ink-border">
             <div>
-              <p className="text-sm text-muted-foreground">Total Contract Value</p>
-              <p className="text-2xl font-bold text-primary">${contract.amount.toLocaleString()}</p>
+              <p className="text-xs font-medium uppercase tracking-wider text-ink-muted mb-1">Total Contract Value</p>
+              <p className="text-2xl font-semibold font-mono text-primary-600">${contract.amount.toLocaleString()}</p>
             </div>
             <div>
-              <p className="text-sm text-muted-foreground">Due Date</p>
-              <p className="text-lg font-semibold">{contract.dueDate}</p>
+              <p className="text-xs font-medium uppercase tracking-wider text-ink-muted mb-1">Due Date</p>
+              <p className="text-lg font-medium font-mono text-ink-primary">{contract.dueDate}</p>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="border-2 border-primary/20 bg-primary/5">
+        <Card className="border-primary-100 bg-primary-50/20">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <CreditCard className="size-5 text-primary" />
+            <CardTitle className="flex items-center gap-2 text-lg font-medium text-ink-primary">
+              <CreditCard className="size-5 text-primary-600" />
               Virtual Account Details
             </CardTitle>
-            <CardDescription>Please deposit the contract amount to the account below. Escrow protection begins upon verification.</CardDescription>
+            <CardDescription className="text-sm text-ink-muted">Please deposit the contract amount to the account below. Escrow protection begins upon verification.</CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
-            <div className="bg-white p-6 rounded-2xl border space-y-4">
+            <div className="bg-white p-8 rounded-xl border border-ink-border space-y-6">
               <div className="flex justify-between items-center">
-                <span className="text-muted-foreground">Bank</span>
-                <span className="font-bold">{tx.bankName}</span>
+                <span className="text-sm text-ink-muted">Bank</span>
+                <span className="text-sm font-medium text-ink-primary">{tx.bankName}</span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-muted-foreground">Account Number</span>
-                <div className="flex items-center gap-2">
-                  <span className="font-bold text-lg">{tx.accountNumber}</span>
-                  <Button variant="ghost" size="icon" onClick={() => copyToClipboard(tx.accountNumber)}>
+                <span className="text-sm text-ink-muted">Account Number</span>
+                <div className="flex items-center gap-3">
+                  <span className="text-lg font-semibold font-mono text-ink-primary">{tx.accountNumber}</span>
+                  <Button variant="ghost" size="icon" onClick={() => copyToClipboard(tx.accountNumber)} className="h-8 w-8 text-ink-muted">
                     <Copy className="size-4" />
                   </Button>
                 </div>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-muted-foreground">Account Holder</span>
-                <span className="font-bold">{tx.accountHolder}</span>
+                <span className="text-sm text-ink-muted">Account Holder</span>
+                <span className="text-sm font-medium text-ink-primary">{tx.accountHolder}</span>
               </div>
             </div>
 
-            <div className="flex gap-3 bg-amber-50 p-4 rounded-xl border border-amber-100 text-amber-800 text-sm">
-              <AlertCircle className="size-5 shrink-0" />
-              <p>Real-time verification is only possible if you deposit exactly to this account. Using a different name may cause delays.</p>
+            <div className="flex gap-4 bg-ink-surface p-4 rounded-lg border border-ink-border text-ink-muted text-xs leading-relaxed">
+              <AlertCircle className="size-5 shrink-0 text-primary-400" />
+              <p>Real-time verification is only possible if you deposit exactly the contract amount to this specific account. Deposits from other accounts may cause processing delays.</p>
             </div>
           </CardContent>
           <CardFooter>
-            <Button className="w-full h-12 text-lg font-bold gap-2" onClick={() => router.push(`/contracts/${contractId}/payment/status`)}>
+            <Button className="w-full h-12 text-base font-medium gap-2" onClick={() => router.push(`/contracts/${contractId}/payment/status`)}>
               I've completed the deposit <ArrowRight className="size-5" />
             </Button>
           </CardFooter>

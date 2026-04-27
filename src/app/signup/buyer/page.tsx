@@ -76,14 +76,14 @@ export default function BuyerSignupPage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
-      <Card className="w-full max-w-md shadow-2xl border-none rounded-3xl overflow-hidden">
-        <CardHeader className="bg-white p-8 pb-4">
-          <Link href="/" className="flex items-center text-sm text-muted-foreground hover:text-primary transition-colors mb-6 group">
+    <div className="min-h-screen bg-ink-canvas flex items-center justify-center p-6">
+      <Card className="w-full max-w-md border-ink-border rounded-xl">
+        <CardHeader className="p-8 pb-4">
+          <Link href="/" className="flex items-center text-sm text-ink-muted hover:text-primary-600 transition-colors mb-6 group">
             <ArrowLeft className="mr-2 size-4 group-hover:-translate-x-1 transition-transform" /> Back to Home
           </Link>
-          <CardTitle className="text-3xl font-black tracking-tight">Buyer Sign Up</CardTitle>
-          <CardDescription className="text-base">Start your trusted business with RoleHub today.</CardDescription>
+          <CardTitle className="text-3xl font-semibold tracking-tight">Buyer Sign Up</CardTitle>
+          <CardDescription className="text-sm text-ink-muted">Start your trusted business with Knotic today.</CardDescription>
         </CardHeader>
         <CardContent className="p-8 pt-4">
           <Form {...form}>
@@ -94,7 +94,7 @@ export default function BuyerSignupPage() {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Company Name</FormLabel>
-                    <FormControl><Input className="h-11 rounded-xl" placeholder="Tech Solutions Inc." {...field} /></FormControl>
+                    <FormControl><Input placeholder="Tech Solutions Inc." {...field} /></FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -107,7 +107,7 @@ export default function BuyerSignupPage() {
                     <FormLabel>Business Reg. Number</FormLabel>
                     <FormControl>
                       <Input 
-                        className="h-11 rounded-xl"
+                        className="font-mono"
                         placeholder="000-00-00000" 
                         {...field} 
                         onChange={(e) => field.onChange(formatBusinessNumber(e.target.value))}
@@ -123,7 +123,7 @@ export default function BuyerSignupPage() {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Representative Name</FormLabel>
-                    <FormControl><Input className="h-11 rounded-xl" placeholder="John Doe" {...field} /></FormControl>
+                    <FormControl><Input placeholder="John Doe" {...field} /></FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -136,7 +136,7 @@ export default function BuyerSignupPage() {
                     <FormLabel>Phone Number</FormLabel>
                     <FormControl>
                       <Input 
-                        className="h-11 rounded-xl"
+                        className="font-mono"
                         placeholder="010-0000-0000" 
                         {...field} 
                         onChange={(e) => field.onChange(formatPhone(e.target.value))}
@@ -152,7 +152,7 @@ export default function BuyerSignupPage() {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Email</FormLabel>
-                    <FormControl><Input className="h-11 rounded-xl" type="email" placeholder="contact@company.com" {...field} /></FormControl>
+                    <FormControl><Input type="email" placeholder="contact@company.com" {...field} /></FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -163,19 +163,19 @@ export default function BuyerSignupPage() {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Password</FormLabel>
-                    <FormControl><Input className="h-11 rounded-xl" type="password" placeholder="At least 8 characters" {...field} /></FormControl>
+                    <FormControl><Input type="password" placeholder="At least 8 characters" {...field} /></FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-              <Button type="submit" className="w-full h-12 text-lg font-bold mt-6 rounded-xl shadow-lg shadow-primary/20" disabled={isSubmitting}>
+              <Button type="submit" className="w-full h-12 text-base font-medium mt-6" disabled={isSubmitting}>
                 {isSubmitting ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : "Sign Up"}
               </Button>
             </form>
           </Form>
         </CardContent>
-        <CardFooter className="flex justify-center border-t p-6 bg-slate-50/50">
-          <p className="text-sm text-muted-foreground">Already have an account? <Link href="/login" className="text-primary font-bold hover:underline">Login</Link></p>
+        <CardFooter className="flex justify-center border-t border-ink-border p-6 bg-ink-surface/30">
+          <p className="text-sm text-ink-muted">Already have an account? <Link href="/login" className="text-primary-600 font-medium hover:underline">Login</Link></p>
         </CardFooter>
       </Card>
     </div>

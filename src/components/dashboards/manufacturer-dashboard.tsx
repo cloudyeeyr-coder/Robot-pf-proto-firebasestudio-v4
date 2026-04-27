@@ -45,58 +45,58 @@ export function ManufacturerDashboard() {
   };
 
   return (
-    <div className="space-y-8">
+    <div className="max-w-7xl mx-auto px-6 py-12 space-y-12">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Card className="bg-zinc-950 text-white border-none shadow-xl">
+        <Card className="bg-ink-primary text-white border-none p-2">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-bold uppercase tracking-widest">Verified SI Partners</CardTitle>
-            <ShieldCheck className="size-4 text-white" />
+            <CardTitle className="text-xs font-medium uppercase tracking-wider text-ink-muted">Verified SI Partners</CardTitle>
+            <ShieldCheck className="size-4 text-primary-400" />
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-black">42</div>
-            <p className="text-xs text-white/60 mt-1">Across 5 global regions</p>
+            <div className="text-3xl font-semibold font-mono">42</div>
+            <p className="text-xs text-ink-muted mt-1">Across 5 global regions</p>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="border-ink-border">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-bold uppercase tracking-widest">Active Proposals</CardTitle>
-            <Package className="size-4 text-zinc-950" />
+            <CardTitle className="text-xs font-medium uppercase tracking-wider text-ink-muted">Active Proposals</CardTitle>
+            <Package className="size-4 text-primary-600" />
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-black">{proposals.filter(p => p.status === 'pending').length}</div>
-            <p className="text-xs text-muted-foreground mt-1">Awaiting SI response</p>
+            <div className="text-3xl font-semibold font-mono text-ink-primary">{proposals.filter(p => p.status === 'pending').length}</div>
+            <p className="text-xs text-ink-muted mt-1">Awaiting SI response</p>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="border-ink-border">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-bold uppercase tracking-widest">Expiring Badges</CardTitle>
-            <AlertTriangle className="size-4 text-zinc-500" />
+            <CardTitle className="text-xs font-medium uppercase tracking-wider text-ink-muted">Expiring Badges</CardTitle>
+            <AlertTriangle className="size-4 text-warning" />
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-black">5</div>
-            <p className="text-xs text-muted-foreground mt-1">Review required within 30 days</p>
+            <div className="text-3xl font-semibold font-mono text-ink-primary">5</div>
+            <p className="text-xs text-ink-muted mt-1">Review required within 30 days</p>
           </CardContent>
         </Card>
       </div>
 
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
-        <Card>
+        <Card className="border-ink-border">
           <CardHeader className="flex flex-row items-center justify-between">
             <div>
-              <CardTitle className="text-xl font-bold uppercase">Certification Management</CardTitle>
-              <CardDescription>Issue and manage SI partner badges.</CardDescription>
+              <CardTitle className="text-xl font-semibold tracking-tight text-ink-primary uppercase">Certification Management</CardTitle>
+              <CardDescription className="text-sm text-ink-muted">Issue and manage SI partner badges.</CardDescription>
             </div>
             <Dialog open={isIssuingBadge} onOpenChange={setIsIssuingBadge}>
               <DialogTrigger asChild>
-                <Button className="gap-2 bg-zinc-950 hover:bg-zinc-800"><Plus className="size-4" /> Issue Badge</Button>
+                <Button size="sm" className="gap-2"><Plus className="size-4" /> Issue Badge</Button>
               </DialogTrigger>
-              <DialogContent>
+              <DialogContent className="rounded-xl border-ink-border">
                 <DialogHeader>
                   <DialogTitle>Issue New Certification</DialogTitle>
                 </DialogHeader>
-                <div className="space-y-4 py-4">
+                <div className="space-y-6 py-6">
                   <div className="space-y-2">
-                    <Label>Select SI Partner</Label>
+                    <Label className="text-xs font-medium uppercase text-ink-muted">Select SI Partner</Label>
                     <Select>
                       <SelectTrigger>
                         <SelectValue placeholder="Search partners..." />
@@ -109,7 +109,7 @@ export function ManufacturerDashboard() {
                     </Select>
                   </div>
                   <div className="space-y-2">
-                    <Label>Badge Type</Label>
+                    <Label className="text-xs font-medium uppercase text-ink-muted">Badge Type</Label>
                     <Select>
                       <SelectTrigger>
                         <SelectValue placeholder="Select certification" />
@@ -122,61 +122,59 @@ export function ManufacturerDashboard() {
                     </Select>
                   </div>
                   <div className="space-y-2">
-                    <Label>Expiry Date</Label>
-                    <Input type="date" className="h-10" />
+                    <Label className="text-xs font-medium uppercase text-ink-muted">Expiry Date</Label>
+                    <Input type="date" />
                   </div>
                 </div>
                 <DialogFooter>
-                  <Button variant="outline" onClick={() => setIsIssuingBadge(false)}>Cancel</Button>
-                  <Button className="bg-zinc-950" onClick={handleIssueBadge}>Confirm Issue</Button>
+                  <Button variant="secondary" onClick={() => setIsIssuingBadge(false)}>Cancel</Button>
+                  <Button onClick={handleIssueBadge}>Confirm Issue</Button>
                 </DialogFooter>
               </DialogContent>
             </Dialog>
           </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {MOCK_SI_PARTNERS.slice(0, 4).map((p) => (
-                <div key={p.id} className="flex items-center justify-between p-4 rounded-xl border bg-zinc-50 hover:bg-zinc-100 transition-colors">
-                  <div className="flex gap-4 items-center">
-                    <div className="size-10 bg-white rounded-lg border flex items-center justify-center text-zinc-950">
-                      <ShieldCheck className="size-5" />
-                    </div>
-                    <div>
-                      <p className="font-bold text-sm">{p.name}</p>
-                      <p className="text-xs text-muted-foreground">{p.badges[0]}</p>
-                    </div>
+          <CardContent className="space-y-4">
+            {MOCK_SI_PARTNERS.slice(0, 4).map((p) => (
+              <div key={p.id} className="flex items-center justify-between p-5 rounded-xl border border-ink-border bg-ink-surface/30 hover:bg-ink-surface/50 transition-colors">
+                <div className="flex gap-4 items-center">
+                  <div className="size-10 bg-white rounded-lg border border-ink-border flex items-center justify-center text-primary-600">
+                    <ShieldCheck className="size-5" />
                   </div>
-                  <Button variant="ghost" size="sm" className="text-xs text-zinc-500 hover:text-zinc-950">Revoke</Button>
+                  <div>
+                    <p className="font-medium text-sm text-ink-primary">{p.name}</p>
+                    <p className="text-xs text-ink-muted uppercase tracking-wider">{p.badges[0]}</p>
+                  </div>
                 </div>
-              ))}
-            </div>
+                <Button variant="ghost" size="sm" className="text-xs text-ink-muted hover:text-danger">Revoke</Button>
+              </div>
+            ))}
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="border-ink-border">
           <CardHeader>
-            <CardTitle className="text-xl font-bold uppercase">Integration Proposals</CardTitle>
-            <CardDescription>Track status of project proposals sent to partners.</CardDescription>
+            <CardTitle className="text-xl font-semibold tracking-tight text-ink-primary uppercase">Integration Proposals</CardTitle>
+            <CardDescription className="text-sm text-ink-muted">Track status of project proposals sent to partners.</CardDescription>
           </CardHeader>
           <CardContent>
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead className="font-bold">Partner</TableHead>
-                  <TableHead className="font-bold">Project</TableHead>
-                  <TableHead className="font-bold">Status</TableHead>
+                  <TableHead>Partner</TableHead>
+                  <TableHead>Project</TableHead>
+                  <TableHead>Status</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {proposals.map((p) => (
-                  <TableRow key={p.id} className="hover:bg-zinc-50">
-                    <TableCell className="font-medium text-sm">{p.siPartner}</TableCell>
-                    <TableCell className="text-sm">{p.title}</TableCell>
+                  <TableRow key={p.id}>
+                    <TableCell className="font-medium text-sm text-ink-primary">{p.siPartner}</TableCell>
+                    <TableCell className="text-sm text-ink-primary">{p.title}</TableCell>
                     <TableCell>
                       <Badge variant={
-                        p.status === 'accepted' ? 'default' :
-                        p.status === 'pending' ? 'outline' : 'secondary'
-                      } className={cn(p.status === 'accepted' ? "bg-zinc-950" : "")}>
+                        p.status === 'accepted' ? 'success' :
+                        p.status === 'pending' ? 'warning' : 'danger'
+                      } className="border-none uppercase text-[10px] tracking-wider">
                         {p.status}
                       </Badge>
                     </TableCell>

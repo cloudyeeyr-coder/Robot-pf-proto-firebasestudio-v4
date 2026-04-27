@@ -83,15 +83,15 @@ export default function SearchPage() {
 
   return (
     <AppShell>
-      <div className="flex flex-col gap-6">
+      <div className="max-w-7xl mx-auto px-6 py-12 flex flex-col gap-12">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <div>
-            <h1 className="text-3xl font-bold font-headline">SI Partner Directory</h1>
-            <p className="text-muted-foreground">Find the perfect integration partner for your project.</p>
+            <h1 className="text-3xl font-semibold tracking-tight text-ink-primary">SI Partner Directory</h1>
+            <p className="text-sm text-ink-muted">Find the perfect integration partner for your project.</p>
           </div>
-          <div className="flex items-center gap-2 w-full sm:w-auto">
-            <div className="relative flex-1 sm:w-64">
-              <Search className="absolute left-3 top-2.5 size-4 text-muted-foreground" />
+          <div className="flex items-center gap-4 w-full sm:w-auto">
+            <div className="relative flex-1 sm:w-72">
+              <Search className="absolute left-3 top-2.5 size-4 text-ink-muted" />
               <Input 
                 placeholder="Search by company name..." 
                 className="pl-9" 
@@ -100,8 +100,8 @@ export default function SearchPage() {
               />
             </div>
             <Select value={sortBy} onValueChange={setSortBy}>
-              <SelectTrigger className="w-[140px]">
-                <SlidersHorizontal className="mr-2 size-4" />
+              <SelectTrigger className="w-[160px]">
+                <SlidersHorizontal className="mr-2 size-4 text-ink-muted" />
                 <SelectValue placeholder="Sort by" />
               </SelectTrigger>
               <SelectContent>
@@ -115,18 +115,18 @@ export default function SearchPage() {
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           <aside className="space-y-6">
             <div className="flex items-center justify-between">
-              <h3 className="font-bold flex items-center gap-2">
+              <h3 className="text-sm font-semibold flex items-center gap-2 text-ink-primary">
                 <Filter className="size-4" /> Filters
               </h3>
-              <Button variant="ghost" size="sm" onClick={clearFilters} className="text-xs text-muted-foreground h-8">
+              <Button variant="ghost" size="sm" onClick={clearFilters} className="text-xs text-ink-muted h-8">
                 Reset
               </Button>
             </div>
 
-            <Separator />
+            <Separator className="bg-ink-border" />
 
             <div className="space-y-4">
-              <h4 className="text-sm font-semibold">Region</h4>
+              <h4 className="text-xs font-semibold uppercase tracking-wider text-ink-muted">Region</h4>
               <Select value={selectedRegion} onValueChange={(val) => { setSelectedRegion(val); setPage(1); }}>
                 <SelectTrigger>
                   <SelectValue placeholder="Select region" />
@@ -137,10 +137,10 @@ export default function SearchPage() {
               </Select>
             </div>
 
-            <Separator />
+            <Separator className="bg-ink-border" />
 
             <div className="space-y-4">
-              <h4 className="text-sm font-semibold">Brands</h4>
+              <h4 className="text-xs font-semibold uppercase tracking-wider text-ink-muted">Brands</h4>
               <div className="grid grid-cols-1 gap-3">
                 {BRANDS.map(brand => (
                   <div key={brand} className="flex items-center space-x-2">
@@ -149,7 +149,7 @@ export default function SearchPage() {
                       checked={selectedBrands.includes(brand)} 
                       onCheckedChange={() => toggleBrand(brand)}
                     />
-                    <label htmlFor={`brand-${brand}`} className="text-sm font-medium leading-none">
+                    <label htmlFor={`brand-${brand}`} className="text-sm font-medium text-ink-primary cursor-pointer">
                       {brand}
                     </label>
                   </div>
@@ -157,32 +157,32 @@ export default function SearchPage() {
               </div>
             </div>
 
-            <Separator />
+            <Separator className="bg-ink-border" />
 
             <div className="space-y-4">
-              <h4 className="text-sm font-semibold">Verification</h4>
+              <h4 className="text-xs font-semibold uppercase tracking-wider text-ink-muted">Verification</h4>
               <div className="flex items-center space-x-2">
                 <Checkbox 
                   id="badge" 
                   checked={onlyBadge} 
                   onCheckedChange={(checked) => { setOnlyBadge(!!checked); setPage(1); }} 
                 />
-                <label htmlFor="badge" className="text-sm font-medium leading-none">
+                <label htmlFor="badge" className="text-sm font-medium text-ink-primary cursor-pointer">
                   Verified Partners Only
                 </label>
               </div>
             </div>
 
-            <Separator />
+            <Separator className="bg-ink-border" />
 
             <div className="space-y-4">
-              <h4 className="text-sm font-semibold">Capabilities</h4>
+              <h4 className="text-xs font-semibold uppercase tracking-wider text-ink-muted">Capabilities</h4>
               <div className="flex flex-wrap gap-2">
                 {TAGS.map(tag => (
                   <Badge 
                     key={tag} 
                     variant={selectedTags.includes(tag) ? 'default' : 'outline'}
-                    className="cursor-pointer"
+                    className="cursor-pointer transition-colors"
                     onClick={() => toggleTag(tag)}
                   >
                     {tag}
@@ -193,10 +193,12 @@ export default function SearchPage() {
           </aside>
 
           <div className="lg:col-span-3 space-y-6">
-            <div className="flex items-center gap-2 mb-2">
-              <Badge variant="secondary" className="rounded-md">{filteredPartners.length} Results</Badge>
+            <div className="flex items-center gap-2 mb-4">
+              <Badge variant="secondary" className="bg-ink-surface text-ink-primary border-none">
+                {filteredPartners.length} Results
+              </Badge>
               {selectedTags.map(tag => (
-                <Badge key={tag} className="gap-1 rounded-md">
+                <Badge key={tag} className="gap-1 rounded-md bg-primary-600 text-white border-none">
                   {tag} <X className="size-3 cursor-pointer" onClick={() => toggleTag(tag)} />
                 </Badge>
               ))}
@@ -209,27 +211,27 @@ export default function SearchPage() {
                 ))}
               </div>
             ) : (
-              <div className="flex flex-col items-center justify-center py-20 bg-slate-50 rounded-3xl border-2 border-dashed">
-                <Search className="size-12 text-slate-300 mb-4" />
-                <h3 className="text-xl font-bold">No results found</h3>
-                <p className="text-muted-foreground">Try adjusting your filters or search keywords.</p>
-                <Button variant="link" onClick={clearFilters} className="mt-2 text-primary">Clear all filters</Button>
+              <div className="flex flex-col items-center justify-center py-24 bg-ink-surface/30 rounded-xl border border-dashed border-ink-border">
+                <Search className="size-12 text-ink-border mb-4" />
+                <h3 className="text-lg font-medium text-ink-primary">No results found</h3>
+                <p className="text-sm text-ink-muted">Try adjusting your filters or search keywords.</p>
+                <Button variant="ghost" onClick={clearFilters} className="mt-4 text-primary-600 font-medium">Clear all filters</Button>
               </div>
             )}
 
             {totalPages > 1 && (
-              <div className="flex items-center justify-center gap-2 pt-8">
-                <Button variant="outline" size="icon" disabled={page === 1} onClick={() => setPage(p => p - 1)}>
+              <div className="flex items-center justify-center gap-2 pt-12">
+                <Button variant="secondary" size="icon" disabled={page === 1} onClick={() => setPage(p => p - 1)}>
                   <ChevronLeft className="size-4" />
                 </Button>
                 <div className="flex items-center gap-1">
                   {Array.from({ length: totalPages }).map((_, i) => (
-                    <Button key={i} variant={page === i + 1 ? 'default' : 'ghost'} size="sm" className="w-8" onClick={() => setPage(i + 1)}>
+                    <Button key={i} variant={page === i + 1 ? 'default' : 'ghost'} size="sm" className="w-9" onClick={() => setPage(i + 1)}>
                       {i + 1}
                     </Button>
                   ))}
                 </div>
-                <Button variant="outline" size="icon" disabled={page === totalPages} onClick={() => setPage(p => p + 1)}>
+                <Button variant="secondary" size="icon" disabled={page === totalPages} onClick={() => setPage(p => p + 1)}>
                   <ChevronRight className="size-4" />
                 </Button>
               </div>
