@@ -1,13 +1,13 @@
 
 "use client"
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
@@ -15,12 +15,12 @@ import { ArrowLeft, Loader2 } from 'lucide-react';
 import Link from 'next/link';
 
 const buyerSignupSchema = z.object({
-  companyName: z.string().min(2, "Company name must be at least 2 characters"),
-  businessNumber: z.string().regex(/^\d{3}-\d{2}-\d{5}$/, "Format: 000-00-00000"),
-  representative: z.string().min(2, "Representative name is required"),
-  phone: z.string().regex(/^\d{2,3}-\d{3,4}-\d{4}$/, "Format: 000-0000-0000"),
-  email: z.string().email("Invalid email address"),
-  password: z.string().min(8, "Password must be at least 8 characters"),
+  companyName: z.string().min(2, "회사명은 2자 이상이어야 합니다."),
+  businessNumber: z.string().regex(/^\d{3}-\d{2}-\d{5}$/, "사업자 번호 형식: 000-00-00000"),
+  representative: z.string().min(2, "대표자 성함을 입력해 주세요."),
+  phone: z.string().regex(/^\d{2,3}-\d{3,4}-\d{4}$/, "전화번호 형식: 000-0000-0000"),
+  email: z.string().email("유효한 이메일 주소를 입력해 주세요."),
+  password: z.string().min(8, "비밀번호는 8자 이상이어야 합니다."),
 });
 
 type BuyerSignupValues = z.infer<typeof buyerSignupSchema>;
@@ -45,24 +45,16 @@ export default function BuyerSignupPage() {
 
   const onSubmit = async (data: BuyerSignupValues) => {
     setIsSubmitting(true);
-    // Mock API call
     setTimeout(() => {
       if (data.email === 'duplicate@example.com') {
-        form.setError('email', { message: 'This email is already registered (Conflict 409)' });
-        toast({
-          title: "Registration Failed",
-          description: "This email is already in use.",
-          variant: "destructive",
-        });
+        form.setError('email', { message: '이미 등록된 이메일입니다.' });
+        toast({ title: "등록 실패", description: "중복된 이메일 주소입니다.", variant: "destructive" });
       } else {
-        toast({
-          title: "Signup Successful!",
-          description: `Welcome, ${data.companyName}!`,
-        });
+        toast({ title: "가입 성공!", description: `${data.companyName}님 환영합니다!` });
         router.push('/search');
       }
       setIsSubmitting(false);
-    }, 1500);
+    }, 1200);
   };
 
   const formatBusinessNumber = (value: string) => {
@@ -82,12 +74,12 @@ export default function BuyerSignupPage() {
   return (
     <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
       <Card className="w-full max-w-md shadow-xl border-none">
-        <CardHeader className="space-y-1">
+        <CardHeader>
           <Link href="/" className="flex items-center text-sm text-muted-foreground hover:text-primary transition-colors mb-4">
-            <ArrowLeft className="mr-2 size-4" /> Back to Home
+            <ArrowLeft className="mr-2 size-4" /> 홈으로 돌아가기
           </Link>
-          <CardTitle className="text-3xl font-bold font-headline">Buyer Registration</CardTitle>
-          <CardDescription>Enter your company details to join RoleHub</CardDescription>
+          <CardTitle className="text-3xl font-bold">수요기업 회원가입</CardTitle>
+          <CardDescription>RoleHub와 함께 비즈니스를 시작해 보세요.</CardDescription>
         </CardHeader>
         <CardContent>
           <Form {...form}>
@@ -97,10 +89,8 @@ export default function BuyerSignupPage() {
                 name="companyName"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Company Name</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Tech Solutions Inc." {...field} />
-                    </FormControl>
+                    <FormLabel>회사명</FormLabel>
+                    <FormControl><Input placeholder="주식회사 테크솔루션" {...field} /></FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -110,7 +100,7 @@ export default function BuyerSignupPage() {
                 name="businessNumber"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Business Registration Number</FormLabel>
+                    <FormLabel>사업자 등록 번호</FormLabel>
                     <FormControl>
                       <Input 
                         placeholder="000-00-00000" 
@@ -127,10 +117,8 @@ export default function BuyerSignupPage() {
                 name="representative"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Representative Name</FormLabel>
-                    <FormControl>
-                      <Input placeholder="John Doe" {...field} />
-                    </FormControl>
+                    <FormLabel>대표자명</FormLabel>
+                    <FormControl><Input placeholder="홍길동" {...field} /></FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -140,7 +128,7 @@ export default function BuyerSignupPage() {
                 name="phone"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Phone Number</FormLabel>
+                    <FormLabel>연락처</FormLabel>
                     <FormControl>
                       <Input 
                         placeholder="010-0000-0000" 
@@ -157,10 +145,8 @@ export default function BuyerSignupPage() {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Email Address</FormLabel>
-                    <FormControl>
-                      <Input type="email" placeholder="contact@company.com" {...field} />
-                    </FormControl>
+                    <FormLabel>이메일</FormLabel>
+                    <FormControl><Input type="email" placeholder="contact@company.com" {...field} /></FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -170,31 +156,20 @@ export default function BuyerSignupPage() {
                 name="password"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Password</FormLabel>
-                    <FormControl>
-                      <Input type="password" placeholder="••••••••" {...field} />
-                    </FormControl>
+                    <FormLabel>비밀번호</FormLabel>
+                    <FormControl><Input type="password" placeholder="••••••••" {...field} /></FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
               <Button type="submit" className="w-full h-12 text-lg font-bold mt-6" disabled={isSubmitting}>
-                {isSubmitting ? (
-                  <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Registering...
-                  </>
-                ) : (
-                  "Create Account"
-                )}
+                {isSubmitting ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : "가입하기"}
               </Button>
             </form>
           </Form>
         </CardContent>
         <CardFooter className="flex justify-center border-t p-6">
-          <p className="text-sm text-muted-foreground">
-            Already have an account? <Link href="/login" className="text-primary font-bold hover:underline">Log in</Link>
-          </p>
+          <p className="text-sm text-muted-foreground">이미 계정이 있으신가요? <Link href="/login" className="text-primary font-bold hover:underline">로그인</Link></p>
         </CardFooter>
       </Card>
     </div>
