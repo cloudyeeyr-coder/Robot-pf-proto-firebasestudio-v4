@@ -15,6 +15,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import Image from 'next/image';
+import { cn } from '@/lib/utils';
 
 export function BuyerDashboard() {
   const products = [
@@ -98,7 +99,10 @@ export function BuyerDashboard() {
                   { icon: History, label: 'Order Delivered', date: 'Yesterday', color: 'purple' },
                 ].map((item, i) => (
                   <div key={i} className="flex gap-4 items-center">
-                    <div className={`size-10 rounded-xl bg-${item.color}-50 flex items-center justify-center text-${item.color}-600`}>
+                    <div className={cn("size-10 rounded-xl flex items-center justify-center", 
+                      item.color === 'blue' ? 'bg-blue-50 text-blue-600' : 
+                      item.color === 'emerald' ? 'bg-emerald-50 text-emerald-600' : 'bg-purple-50 text-purple-600'
+                    )}>
                       <item.icon className="size-5" />
                     </div>
                     <div>
