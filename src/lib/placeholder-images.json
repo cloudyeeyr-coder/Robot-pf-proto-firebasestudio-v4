@@ -2,27 +2,27 @@
   "placeholderImages": [
     {
       "id": "hero-industrial",
-      "description": "Industrial technology background for hero section",
-      "imageUrl": "https://picsum.photos/seed/industrial/1200/400",
-      "imageHint": "industrial technology"
+      "description": "Industrial robotic arm background",
+      "imageUrl": "https://picsum.photos/seed/robotic-arm/1200/400",
+      "imageHint": "industrial robot"
     },
     {
       "id": "product-sensor",
-      "description": "Precision sensor component",
-      "imageUrl": "https://picsum.photos/seed/sensor/400/300",
-      "imageHint": "industrial sensor"
+      "description": "High precision digital sensor",
+      "imageUrl": "https://picsum.photos/seed/tech-sensor/400/300",
+      "imageHint": "tech sensor"
     },
     {
       "id": "product-motor",
-      "description": "High-torque industrial motor",
-      "imageUrl": "https://picsum.photos/seed/motor/400/300",
-      "imageHint": "electric motor"
+      "description": "Servo motor for automation",
+      "imageUrl": "https://picsum.photos/seed/servo-motor/400/300",
+      "imageHint": "servo motor"
     },
     {
       "id": "product-hub",
-      "description": "Connectivity industrial hub",
-      "imageUrl": "https://picsum.photos/seed/hub/400/300",
-      "imageHint": "network hub"
+      "description": "Industrial automation hub",
+      "imageUrl": "https://picsum.photos/seed/automation-hub/400/300",
+      "imageHint": "industrial automation"
     }
   ]
 }

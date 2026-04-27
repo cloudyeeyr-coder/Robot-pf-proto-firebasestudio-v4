@@ -4,39 +4,39 @@
 
 @layer base {
   :root {
-    --background: 228 100% 96.5%; /* #EBEFFF - Light blue-grey */
-    --foreground: 218 23% 23%; /* #2D3748 - Charcoal grey */
+    --background: 0 0% 100%; /* Pure white */
+    --foreground: 240 10% 3.9%; /* Near black */
     --card: 0 0% 100%;
-    --card-foreground: 218 23% 23%;
+    --card-foreground: 240 10% 3.9%;
     --popover: 0 0% 100%;
-    --popover-foreground: 218 23% 23%;
-    --primary: 228 74% 52%; /* #294CDC - Deep corporate blue */
+    --popover-foreground: 240 10% 3.9%;
+    --primary: 358 80% 51%; /* ROBOTIS Red: #E61E28 */
     --primary-foreground: 0 0% 100%;
-    --secondary: 211 68% 76%; /* #9BC2EB - Sky blue */
-    --secondary-foreground: 228 74% 20%;
-    --muted: 228 20% 90%;
-    --muted-foreground: 218 10% 45%;
-    --accent: 211 68% 90%;
-    --accent-foreground: 228 74% 30%;
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-    --border: 228 30% 88%;
-    --input: 228 30% 88%;
-    --ring: 228 74% 52%;
-    --chart-1: 228 74% 52%;
-    --chart-2: 211 68% 76%;
-    --chart-3: 199 89% 48%;
-    --chart-4: 250 84% 54%;
-    --chart-5: 200 100% 37%;
-    --radius: 0.75rem;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 358 80% 51%;
+    --chart-1: 358 80% 51%;
+    --chart-2: 240 10% 10%;
+    --chart-3: 0 0% 80%;
+    --chart-4: 358 80% 70%;
+    --chart-5: 240 5% 30%;
+    --radius: 0.5rem; /* Sharper corners for industrial feel */
     --sidebar-background: 0 0% 100%;
-    --sidebar-foreground: 218 23% 23%;
-    --sidebar-primary: 228 74% 52%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 211 68% 95%;
-    --sidebar-accent-foreground: 228 74% 30%;
-    --sidebar-border: 228 30% 92%;
-    --sidebar-ring: 228 74% 52%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 358 80% 51%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 240 5.9% 90%;
+    --sidebar-ring: 358 80% 51%;
   }
 }
 
@@ -50,21 +50,21 @@
 }
 
 .glass-card {
-  @apply bg-white/80 backdrop-blur-md border border-white/20 shadow-xl;
+  @apply bg-white/90 backdrop-blur-sm border border-slate-200 shadow-lg;
 }
 
 .role-gradient-admin {
-  @apply bg-gradient-to-br from-indigo-600 to-blue-700 text-white;
+  @apply bg-zinc-900 text-white;
 }
 
 .role-gradient-manufacturer {
-  @apply bg-gradient-to-br from-emerald-600 to-teal-700 text-white;
+  @apply bg-red-600 text-white;
 }
 
 .role-gradient-partner {
-  @apply bg-gradient-to-br from-blue-500 to-cyan-600 text-white;
+  @apply bg-zinc-800 text-white;
 }
 
 .role-gradient-buyer {
-  @apply bg-gradient-to-br from-slate-700 to-slate-900 text-white;
+  @apply bg-white text-zinc-900 border-2 border-zinc-900;
 }
