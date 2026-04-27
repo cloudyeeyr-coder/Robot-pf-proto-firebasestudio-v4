@@ -1,4 +1,4 @@
-import type {Config} from 'tailwindcss';
+import type { Config } from 'tailwindcss';
 
 export default {
   darkMode: ['class'],
@@ -9,12 +9,27 @@ export default {
   ],
   theme: {
     extend: {
-      fontFamily: {
-        body: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],
-        headline: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],
-        code: ['monospace'],
-      },
       colors: {
+        primary: {
+          50: '#E6F1FB',
+          100: '#B5D4F4',
+          400: '#378ADD',
+          600: '#185FA5',
+          800: '#0C447C',
+          DEFAULT: 'hsl(var(--primary))',
+          foreground: 'hsl(var(--primary-foreground))',
+        },
+        ink: {
+          canvas: '#FAFAF9',
+          surface: '#F1EFE8',
+          border: '#D3D1C7',
+          muted: '#5F5E5A',
+          primary: '#1F1F1E',
+        },
+        success: '#0F6E56',
+        warning: '#BA7517',
+        danger: '#A32D2D',
+        badge: '#534AB7',
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         card: {
@@ -24,10 +39,6 @@ export default {
         popover: {
           DEFAULT: 'hsl(var(--popover))',
           foreground: 'hsl(var(--popover-foreground))',
-        },
-        primary: {
-          DEFAULT: 'hsl(var(--primary))',
-          foreground: 'hsl(var(--primary-foreground))',
         },
         secondary: {
           DEFAULT: 'hsl(var(--secondary))',
@@ -66,6 +77,10 @@ export default {
           ring: 'hsl(var(--sidebar-ring))',
         },
       },
+      fontFamily: {
+        sans: ['Pretendard', 'Inter', 'system-ui', 'sans-serif'],
+        mono: ['var(--font-jetbrains-mono)', 'monospace'],
+      },
       borderRadius: {
         lg: 'var(--radius)',
         md: 'calc(var(--radius) - 2px)',
@@ -73,20 +88,12 @@ export default {
       },
       keyframes: {
         'accordion-down': {
-          from: {
-            height: '0',
-          },
-          to: {
-            height: 'var(--radix-accordion-content-height)',
-          },
+          from: { height: '0' },
+          to: { height: 'var(--radix-accordion-content-height)' },
         },
         'accordion-up': {
-          from: {
-            height: 'var(--radix-accordion-content-height)',
-          },
-          to: {
-            height: '0',
-          },
+          from: { height: 'var(--radix-accordion-content-height)' },
+          to: { height: '0' },
         },
         'fade-in': {
           '0%': { opacity: '0', transform: 'translateY(10px)' },

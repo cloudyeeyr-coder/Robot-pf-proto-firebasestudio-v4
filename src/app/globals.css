@@ -4,39 +4,34 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%; /* Pure white */
-    --foreground: 240 10% 3.9%; /* Zinc 950 */
+    --background: 60 9% 98%;        /* #FAFAF9 ink-canvas */
+    --foreground: 60 1% 12%;        /* #1F1F1E ink-primary */
     --card: 0 0% 100%;
-    --card-foreground: 240 10% 3.9%;
+    --card-foreground: 60 1% 12%;
     --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 3.9%;
-    --primary: 240 10% 3.9%; /* Zinc 950 */
+    --popover-foreground: 60 1% 12%;
+    --primary: 210 74% 37%;          /* #185FA5 */
     --primary-foreground: 0 0% 100%;
-    --secondary: 240 4.8% 95.9%;
-    --secondary-foreground: 240 5.9% 10%;
-    --muted: 240 4.8% 95.9%;
-    --muted-foreground: 240 3.8% 46.1%;
-    --accent: 240 4.8% 95.9%;
-    --accent-foreground: 240 5.9% 10%;
-    --destructive: 0 0% 0%; /* Black for consistency */
-    --destructive-foreground: 0 0% 98%;
-    --border: 240 5.9% 90%;
-    --input: 240 5.9% 90%;
-    --ring: 240 10% 3.9%;
-    --chart-1: 240 10% 3.9%;
-    --chart-2: 240 5% 64.9%;
-    --chart-3: 0 0% 80%;
-    --chart-4: 240 5% 30%;
-    --chart-5: 240 5% 50%;
-    --radius: 0.5rem;
-    --sidebar-background: 0 0% 100%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 10% 3.9%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 240 5.9% 90%;
-    --sidebar-ring: 240 10% 3.9%;
+    --secondary: 50 17% 92%;         /* #F1EFE8 ink-surface */
+    --secondary-foreground: 60 1% 12%;
+    --muted: 50 17% 92%;
+    --muted-foreground: 45 4% 37%;   /* #5F5E5A ink-muted */
+    --accent: 50 17% 92%;
+    --accent-foreground: 60 1% 12%;
+    --destructive: 0 57% 41%;        /* #A32D2D danger */
+    --destructive-foreground: 0 0% 100%;
+    --border: 49 13% 80%;            /* #D3D1C7 ink-border */
+    --input: 49 13% 80%;
+    --ring: 210 74% 37%;
+    --radius: 0.625rem;
+    --sidebar-background: 60 9% 98%;
+    --sidebar-foreground: 60 1% 12%;
+    --sidebar-primary: 210 74% 37%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 50 17% 92%;
+    --sidebar-accent-foreground: 60 1% 12%;
+    --sidebar-border: 49 13% 80%;
+    --sidebar-ring: 210 74% 37%;
   }
 }
 
@@ -45,26 +40,10 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground font-body antialiased;
+    @apply bg-background text-foreground font-sans antialiased;
   }
 }
 
 .glass-card {
   @apply bg-white/90 backdrop-blur-sm border border-slate-200 shadow-lg;
-}
-
-.role-gradient-admin {
-  @apply bg-zinc-950 text-white;
-}
-
-.role-gradient-manufacturer {
-  @apply bg-zinc-800 text-white;
-}
-
-.role-gradient-partner {
-  @apply bg-zinc-900 text-white;
-}
-
-.role-gradient-buyer {
-  @apply bg-white text-zinc-950 border-2 border-zinc-950;
 }

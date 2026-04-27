@@ -10,11 +10,11 @@ import {
   Factory, 
   Briefcase, 
   User, 
-  ArrowLeft,
-  Cpu
+  ArrowLeft
 } from 'lucide-react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
+import { KnoticWordmark, KnoticSymbol } from '@/components/brand/Logo';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -33,46 +33,44 @@ export default function LoginPage() {
       title: 'Buyer', 
       desc: 'Project orders and contract management', 
       icon: User,
-      color: 'bg-white text-zinc-950 border-zinc-200'
+      color: 'bg-white text-ink-primary border-ink-border'
     },
     { 
       id: 'SI_PARTNER' as UserRole, 
       title: 'SI Partner', 
       desc: 'Proposal writing and project execution', 
       icon: Briefcase,
-      color: 'bg-zinc-900 text-white border-zinc-800'
+      color: 'bg-primary text-white border-primary/20'
     },
     { 
       id: 'MANUFACTURER' as UserRole, 
       title: 'Manufacturer', 
       desc: 'Production processes and inventory', 
       icon: Factory,
-      color: 'bg-zinc-950 text-white border-zinc-900'
+      color: 'bg-ink-primary text-white border-ink-primary/20'
     },
     { 
       id: 'ADMIN' as UserRole, 
       title: 'Admin', 
       desc: 'Platform operations and settlement', 
       icon: ShieldCheck,
-      color: 'bg-zinc-100 text-zinc-900 border-zinc-300'
+      color: 'bg-ink-surface text-ink-primary border-ink-border'
     },
   ];
 
   return (
-    <div className="min-h-screen bg-white flex flex-col items-center justify-center p-4">
+    <div className="min-h-screen bg-ink-canvas flex flex-col items-center justify-center p-4">
       <div className="w-full max-w-4xl space-y-12">
         <div className="text-center space-y-6">
-          <Link href="/" className="inline-flex items-center text-xs font-black uppercase tracking-widest text-zinc-400 hover:text-zinc-950 transition-colors group">
+          <Link href="/" className="inline-flex items-center text-xs font-bold uppercase tracking-widest text-ink-muted hover:text-primary transition-colors group">
             <ArrowLeft className="mr-2 size-4 group-hover:-translate-x-1 transition-transform" /> Back to Home
           </Link>
           <div className="flex justify-center">
-            <div className="size-20 bg-zinc-950 flex items-center justify-center shadow-2xl">
-              <Cpu className="text-white size-10" />
-            </div>
+             <KnoticWordmark className="h-12 w-auto" />
           </div>
           <div className="space-y-2">
-            <h1 className="text-5xl font-black tracking-tighter text-zinc-950 uppercase italic">RoleHub Login</h1>
-            <p className="text-zinc-500 text-lg uppercase tracking-tight">Select your operational interface</p>
+            <h1 className="text-4xl font-black tracking-tighter text-ink-primary uppercase italic">Operational Login</h1>
+            <p className="text-ink-muted text-sm uppercase tracking-widest">Select your interface</p>
           </div>
         </div>
 
@@ -80,16 +78,16 @@ export default function LoginPage() {
           {ROLES.map((role) => (
             <Card 
               key={role.id} 
-              className="cursor-pointer group hover:border-zinc-950 hover:shadow-2xl transition-all duration-500 border-2 rounded-none overflow-hidden"
+              className="cursor-pointer group hover:border-primary hover:shadow-xl transition-all duration-300 border-2 rounded-2xl overflow-hidden"
               onClick={() => handleLogin(role.id)}
             >
               <CardContent className="p-0 flex items-stretch h-32">
-                <div className={cn("w-32 flex items-center justify-center shrink-0 border-r", role.color)}>
-                  <role.icon className="size-10" />
+                <div className={cn("w-24 flex items-center justify-center shrink-0 border-r", role.color)}>
+                  <role.icon className="size-8" />
                 </div>
                 <div className="flex-1 p-6 flex flex-col justify-center bg-white">
-                  <h3 className="text-xl font-black uppercase tracking-tight group-hover:text-zinc-950 transition-colors">{role.title}</h3>
-                  <p className="text-zinc-500 text-xs mt-1 leading-tight">{role.desc}</p>
+                  <h3 className="text-xl font-bold uppercase tracking-tight group-hover:text-primary transition-colors">{role.title}</h3>
+                  <p className="text-ink-muted text-xs mt-1 leading-tight">{role.desc}</p>
                 </div>
               </CardContent>
             </Card>
@@ -97,8 +95,8 @@ export default function LoginPage() {
         </div>
 
         <div className="text-center">
-          <p className="text-zinc-400 text-sm font-bold uppercase tracking-wider">
-            New to the ecosystem? <Link href="/signup/buyer" className="text-zinc-950 font-black hover:underline underline-offset-4">Register as Buyer</Link>
+          <p className="text-ink-muted text-sm font-medium">
+            New to the ecosystem? <Link href="/signup/buyer" className="text-primary font-bold hover:underline underline-offset-4">Register as Buyer</Link>
           </p>
         </div>
       </div>
