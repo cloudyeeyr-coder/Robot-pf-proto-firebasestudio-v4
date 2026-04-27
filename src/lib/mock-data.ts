@@ -24,6 +24,7 @@ export interface Contract {
   status: 'payment_pending' | 'escrow_held' | 'completed' | 'disputed';
   createdAt: string;
   dueDate: string;
+  adminMemo?: string;
 }
 
 export interface EscrowTx {
@@ -35,6 +36,24 @@ export interface EscrowTx {
   depositedAmount: number;
   status: 'pending' | 'verifying' | 'held' | 'released';
   updatedAt: string;
+}
+
+export interface AdminLog {
+  id: string;
+  event: string;
+  user: string;
+  timestamp: string;
+  status: 'success' | 'warning' | 'error';
+}
+
+export interface Proposal {
+  id: string;
+  title: string;
+  siPartner: string;
+  manufacturer: string;
+  status: 'pending' | 'accepted' | 'rejected' | 'expired';
+  date: string;
+  description: string;
 }
 
 const BRANDS = ['Samsung SDS', 'LG CNS', 'SK C&C', 'Hyundai AutoEver', 'CJ OliveNetworks'];
@@ -68,3 +87,16 @@ export const MOCK_ESCROW_TXS: Record<string, EscrowTx> = {
   'CON-001': { id: 'TX-001', contractId: 'CON-001', bankName: 'Standard Chartered', accountNumber: '110-456-789012', accountHolder: 'RoleHub Escrow Services', depositedAmount: 0, status: 'pending', updatedAt: '2024-03-15 10:00' },
   'CON-002': { id: 'TX-002', contractId: 'CON-002', bankName: 'Standard Chartered', accountNumber: '110-456-789012', accountHolder: 'RoleHub Escrow Services', depositedAmount: 45000000, status: 'held', updatedAt: '2024-03-16 14:30' },
 };
+
+export const MOCK_ADMIN_LOGS: AdminLog[] = [
+  { id: '1', event: 'New User Registered', user: 'Tech Innovations', timestamp: '2024-03-21 14:20', status: 'success' },
+  { id: '2', event: 'Escrow Payment Verified', user: 'CON-002', timestamp: '2024-03-21 13:45', status: 'success' },
+  { id: '3', event: 'Dispute Raised', user: 'CON-005', timestamp: '2024-03-21 12:10', status: 'error' },
+  { id: '4', event: 'System Maintenance Scheduled', user: 'Admin', timestamp: '2024-03-21 10:00', status: 'warning' },
+];
+
+export const MOCK_PROPOSALS: Proposal[] = [
+  { id: 'PROP-001', title: 'Smart Logistics System', siPartner: 'Samsung SDS Partner 1', manufacturer: 'Global Parts Co.', status: 'pending', date: '2024-03-18', description: 'Proposed implementation of AI-driven logistics.' },
+  { id: 'PROP-002', title: 'Battery Cell Monitoring', siPartner: 'LG CNS Partner 2', manufacturer: 'NextGen Energy', status: 'accepted', date: '2024-03-15', description: 'Real-time monitoring for production lines.' },
+  { id: 'PROP-003', title: 'Legacy ERP Migration', siPartner: 'SK C&C Partner 3', manufacturer: 'Heavy Industries Ltd', status: 'rejected', date: '2024-03-10', description: 'Cloud migration of on-premise ERP.' },
+];

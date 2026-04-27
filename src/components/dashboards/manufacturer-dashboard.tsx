@@ -1,114 +1,191 @@
+
 "use client"
 
-import React from 'react';
+import React, { useState } from 'react';
 import { 
   Factory, 
-  History, 
   Package, 
-  Clock,
   CheckCircle2,
   AlertTriangle,
-  ArrowRight
+  Plus,
+  Calendar,
+  ShieldCheck,
+  Search
 } from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Progress } from '@/components/ui/progress';
+import { Input } from '@/components/ui/input';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { 
+  Dialog, 
+  DialogContent, 
+  DialogHeader, 
+  DialogTitle, 
+  DialogTrigger,
+  DialogFooter 
+} from '@/components/ui/dialog';
+import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { useToast } from '@/hooks/use-toast';
+import { MOCK_SI_PARTNERS, MOCK_PROPOSALS } from '@/lib/mock-data';
 
 export function ManufacturerDashboard() {
-  const orders = [
-    { id: 'ORD-001', client: 'Global Systems Inc', product: 'Control Panel v2', status: 'In Production', progress: 65 },
-    { id: 'ORD-002', client: 'TechFlow Ltd', product: 'Sensor Module X', status: 'Quality Check', progress: 90 },
-    { id: 'ORD-003', client: 'BuildWise Co', product: 'Heavy Duty Motor', status: 'Pending', progress: 5 },
-    { id: 'ORD-004', client: 'Nexus Energy', product: 'Power Converter', status: 'Delayed', progress: 40 },
-  ];
+  const { toast } = useToast();
+  const [proposals, setProposals] = useState(MOCK_PROPOSALS);
+  const [isIssuingBadge, setIsIssuingBadge] = useState(false);
+
+  const handleIssueBadge = () => {
+    toast({
+      title: "Badge Issued",
+      description: "A new certification badge has been sent to the partner.",
+    });
+    setIsIssuingBadge(false);
+  };
 
   return (
     <div className="space-y-8">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Card>
+        <Card className="bg-emerald-50 border-emerald-100">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium">Active Production</CardTitle>
-            <Factory className="size-4 text-primary" />
+            <CardTitle className="text-sm font-medium text-emerald-800">Verified SI Partners</CardTitle>
+            <ShieldCheck className="size-4 text-emerald-600" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">12 Lines</div>
-            <p className="text-xs text-muted-foreground mt-1">92% efficiency rate</p>
+            <div className="text-2xl font-bold text-emerald-900">42</div>
+            <p className="text-xs text-emerald-700 mt-1">Across 5 global regions</p>
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium">Inventory Health</CardTitle>
-            <Package className="size-4 text-secondary" />
+            <CardTitle className="text-sm font-medium">Active Proposals</CardTitle>
+            <Package className="size-4 text-primary" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">Optimal</div>
-            <p className="text-xs text-muted-foreground mt-1">4 SKUs low on stock</p>
+            <div className="text-2xl font-bold">{proposals.filter(p => p.status === 'pending').length}</div>
+            <p className="text-xs text-muted-foreground mt-1">Awaiting SI response</p>
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium">Service Requests</CardTitle>
-            <History className="size-4 text-amber-500" />
+            <CardTitle className="text-sm font-medium">Expiring Badges</CardTitle>
+            <AlertTriangle className="size-4 text-amber-500" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">8 Pending</div>
-            <p className="text-xs text-muted-foreground mt-1">Avg response: 4.2h</p>
+            <div className="text-2xl font-bold">5</div>
+            <p className="text-xs text-muted-foreground mt-1">Review required within 30 days</p>
           </CardContent>
         </Card>
       </div>
 
-      <Card>
-        <CardHeader className="flex flex-row items-center justify-between">
-          <div>
-            <CardTitle>Production Queue</CardTitle>
-            <CardDescription>Real-time status of current manufacturing orders.</CardDescription>
-          </div>
-          <Button variant="outline" size="sm">View Full Schedule</Button>
-        </CardHeader>
-        <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Order ID</TableHead>
-                <TableHead>Client</TableHead>
-                <TableHead>Product</TableHead>
-                <TableHead>Progress</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead className="text-right">Action</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {orders.map((order) => (
-                <TableRow key={order.id}>
-                  <TableCell className="font-mono text-xs">{order.id}</TableCell>
-                  <TableCell className="font-medium">{order.client}</TableCell>
-                  <TableCell>{order.product}</TableCell>
-                  <TableCell className="min-w-[140px]">
-                    <div className="flex items-center gap-2">
-                      <Progress value={order.progress} className="h-2" />
-                      <span className="text-[10px] font-bold">{order.progress}%</span>
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between">
+            <div>
+              <CardTitle>Certification Management</CardTitle>
+              <CardDescription>Issue and manage SI partner badges.</CardDescription>
+            </div>
+            <Dialog open={isIssuingBadge} onOpenChange={setIsIssuingBadge}>
+              <DialogTrigger asChild>
+                <Button className="gap-2"><Plus className="size-4" /> Issue Badge</Button>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Issue New Certification</DialogTitle>
+                </DialogHeader>
+                <div className="space-y-4 py-4">
+                  <div className="space-y-2">
+                    <Label>Select SI Partner</Label>
+                    <Select>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Search partners..." />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {MOCK_SI_PARTNERS.slice(0, 5).map(p => (
+                          <SelectItem key={p.id} value={p.id}>{p.name}</SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-2">
+                    <Label>Badge Type</Label>
+                    <Select>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select certification" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="platinum">Platinum Partner</SelectItem>
+                        <SelectItem value="security">Security Specialist</SelectItem>
+                        <SelectItem value="cloud">Cloud Integration Pro</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-2">
+                    <Label>Expiry Date</Label>
+                    <Input type="date" className="h-10" />
+                  </div>
+                </div>
+                <DialogFooter>
+                  <Button variant="outline" onClick={() => setIsIssuingBadge(false)}>Cancel</Button>
+                  <Button onClick={handleIssueBadge}>Confirm Issue</Button>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              {MOCK_SI_PARTNERS.slice(0, 4).map((p) => (
+                <div key={p.id} className="flex items-center justify-between p-4 rounded-xl border bg-slate-50/50">
+                  <div className="flex gap-4 items-center">
+                    <div className="size-10 bg-white rounded-lg border flex items-center justify-center text-primary">
+                      <ShieldCheck className="size-5" />
                     </div>
-                  </TableCell>
-                  <TableCell>
-                    <Badge variant={
-                      order.status === 'In Production' ? 'default' :
-                      order.status === 'Quality Check' ? 'secondary' :
-                      order.status === 'Delayed' ? 'destructive' : 'outline'
-                    }>
-                      {order.status}
-                    </Badge>
-                  </TableCell>
-                  <TableCell className="text-right">
-                    <Button variant="ghost" size="icon"><ArrowRight className="size-4" /></Button>
-                  </TableCell>
-                </TableRow>
+                    <div>
+                      <p className="font-bold text-sm">{p.name}</p>
+                      <p className="text-xs text-muted-foreground">{p.badges[0]}</p>
+                    </div>
+                  </div>
+                  <Button variant="ghost" size="sm" className="text-xs text-destructive">Revoke</Button>
+                </div>
               ))}
-            </TableBody>
-          </Table>
-        </CardContent>
-      </Card>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Integration Proposals</CardTitle>
+            <CardDescription>Track status of project proposals sent to partners.</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Partner</TableHead>
+                  <TableHead>Project</TableHead>
+                  <TableHead>Status</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {proposals.map((p) => (
+                  <TableRow key={p.id}>
+                    <TableCell className="font-medium text-sm">{p.siPartner}</TableCell>
+                    <TableCell className="text-sm">{p.title}</TableCell>
+                    <TableCell>
+                      <Badge variant={
+                        p.status === 'accepted' ? 'default' :
+                        p.status === 'pending' ? 'outline' : 'secondary'
+                      }>
+                        {p.status}
+                      </Badge>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 }

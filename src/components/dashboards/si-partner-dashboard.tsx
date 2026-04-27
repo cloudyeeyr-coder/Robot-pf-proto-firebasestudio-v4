@@ -1,27 +1,66 @@
+
 "use client"
 
-import React from 'react';
+import React, { useState } from 'react';
 import { 
   FileText, 
   Briefcase, 
   Sparkles, 
   Clock,
   Send,
-  Search,
-  Plus
+  Plus,
+  Bell,
+  CheckCircle2,
+  XCircle,
+  AlertCircle,
+  ShieldCheck
 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { AIAssistanceCard } from '@/components/ai/ai-assistance-card';
-import { Input } from '@/components/ui/input';
+import { 
+  Dialog, 
+  DialogContent, 
+  DialogHeader, 
+  DialogTitle, 
+  DialogDescription, 
+  DialogFooter 
+} from '@/components/ui/dialog';
+import { Textarea } from '@/components/ui/textarea';
+import { useToast } from '@/hooks/use-toast';
+import { MOCK_PROPOSALS, Proposal } from '@/lib/mock-data';
+import { cn } from '@/lib/utils';
 
 export function SIPartnerDashboard() {
-  const proposals = [
-    { id: 1, title: 'Smart Factory Integration', client: 'MegaCorp', budget: '$250k', deadline: '2024-05-15', status: 'Draft' },
-    { id: 2, title: 'Network Infrastructure Upgrade', client: 'EduSoft', budget: '$120k', deadline: '2024-05-20', status: 'In Review' },
-    { id: 3, title: 'Cloud Migration Strategy', client: 'FinSafe', budget: '$85k', deadline: '2024-06-01', status: 'Approved' },
-  ];
+  const { toast } = useToast();
+  const [proposals, setProposals] = useState<Proposal[]>(MOCK_PROPOSALS);
+  const [selectedProposal, setSelectedProposal] = useState<Proposal | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [actionType, setActionType] = useState<'accept' | 'reject' | null>(null);
+  const [reason, setReason] = useState('');
+
+  const handleAction = (proposal: Proposal, type: 'accept' | 'reject') => {
+    setSelectedProposal(proposal);
+    setActionType(type);
+    setIsModalOpen(true);
+  };
+
+  const confirmAction = () => {
+    if (!selectedProposal || !actionType) return;
+
+    setProposals(prev => prev.map(p => 
+      p.id === selectedProposal.id ? { ...p, status: actionType === 'accept' ? 'accepted' : 'rejected' } : p
+    ));
+
+    toast({
+      title: actionType === 'accept' ? "Proposal Accepted" : "Proposal Rejected",
+      description: `Action completed for ${selectedProposal.title}.`,
+    });
+
+    setIsModalOpen(false);
+    setReason('');
+  };
 
   return (
     <div className="space-y-8">
@@ -30,102 +69,98 @@ export function SIPartnerDashboard() {
           <h2 className="text-3xl font-bold tracking-tight">SI Partner Hub</h2>
           <p className="text-muted-foreground">Manage your proposals and leverage AI for better content.</p>
         </div>
-        <Button className="gap-2">
-          <Plus className="size-4" />
-          Create New Proposal
-        </Button>
+        <div className="flex gap-2">
+          <Button variant="outline" className="gap-2"><Briefcase className="size-4" /> My Projects</Button>
+          <Button className="gap-2"><Plus className="size-4" /> New Proposal</Button>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
-        <div className="xl:col-span-2 space-y-6">
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between">
-              <div>
-                <CardTitle>Active Proposals</CardTitle>
-                <CardDescription>Track the status of your submitted and draft proposals.</CardDescription>
-              </div>
-              <div className="relative w-full max-w-[200px] hidden sm:block">
-                <Search className="absolute left-2 top-2.5 size-4 text-muted-foreground" />
-                <Input placeholder="Search proposals..." className="pl-8" />
-              </div>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                {proposals.map((p) => (
-                  <div key={p.id} className="group flex items-center justify-between p-4 rounded-xl border border-border bg-white hover:border-primary/50 hover:shadow-md transition-all">
-                    <div className="flex gap-4 items-center">
-                      <div className="size-10 rounded-lg bg-blue-50 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors">
-                        <FileText className="size-5" />
+        <div className="xl:col-span-2 space-y-8">
+          <section className="space-y-4">
+            <h3 className="text-xl font-bold flex items-center gap-2">
+              <Bell className="size-5 text-primary" /> Incoming Proposals
+            </h3>
+            <div className="grid grid-cols-1 gap-4">
+              {proposals.filter(p => p.status === 'pending').map((p) => (
+                <Card key={p.id} className="border-none shadow-sm hover:shadow-md transition-all">
+                  <CardContent className="p-6">
+                    <div className="flex flex-col md:flex-row justify-between gap-4">
+                      <div className="space-y-2">
+                        <Badge variant="secondary" className="mb-2">{p.manufacturer}</Badge>
+                        <h4 className="text-lg font-bold">{p.title}</h4>
+                        <p className="text-sm text-muted-foreground line-clamp-2">{p.description}</p>
                       </div>
-                      <div>
-                        <h4 className="font-semibold">{p.title}</h4>
-                        <p className="text-sm text-muted-foreground">{p.client} • {p.budget}</p>
+                      <div className="flex items-end gap-2 shrink-0">
+                        <Button variant="outline" size="sm" onClick={() => handleAction(p, 'reject')}>Reject</Button>
+                        <Button size="sm" onClick={() => handleAction(p, 'accept')}>Accept</Button>
                       </div>
                     </div>
-                    <div className="flex items-center gap-4">
-                      <div className="text-right hidden sm:block">
-                        <p className="text-xs font-medium">Deadline</p>
-                        <p className="text-xs text-muted-foreground">{p.deadline}</p>
-                      </div>
-                      <Badge variant={p.status === 'Approved' ? 'secondary' : p.status === 'In Review' ? 'default' : 'outline'}>
-                        {p.status}
-                      </Badge>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </section>
 
-          <Card>
-            <CardHeader>
-              <CardTitle>Partner Analytics</CardTitle>
-              <CardDescription>Your win rate and project delivery performance.</CardDescription>
-            </CardHeader>
-            <CardContent className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-               <div className="space-y-2">
-                 <p className="text-xs text-muted-foreground uppercase font-bold tracking-widest">Win Rate</p>
-                 <p className="text-3xl font-bold">78%</p>
-                 <div className="h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
-                   <div className="h-full bg-primary w-[78%]" />
-                 </div>
-               </div>
-               <div className="space-y-2">
-                 <p className="text-xs text-muted-foreground uppercase font-bold tracking-widest">Active Projects</p>
-                 <p className="text-3xl font-bold">14</p>
-                 <p className="text-xs text-green-600">+2 from last month</p>
-               </div>
-               <div className="space-y-2">
-                 <p className="text-xs text-muted-foreground uppercase font-bold tracking-widest">Response Time</p>
-                 <p className="text-3xl font-bold">1.5h</p>
-                 <p className="text-xs text-blue-600">Top 5% of partners</p>
-               </div>
-            </CardContent>
-          </Card>
+          <section className="space-y-4">
+            <h3 className="text-xl font-bold">Certification Status</h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {[
+                { name: 'Platinum Partner', expiry: '2024-03-28', warning: true },
+                { name: 'Security Verified', expiry: '2025-01-10', warning: false },
+              ].map((badge, i) => (
+                <Card key={i} className={cn("relative overflow-hidden", badge.warning && "border-amber-200 bg-amber-50")}>
+                  <CardContent className="p-6 flex items-center gap-4">
+                    <div className={cn(
+                      "size-12 rounded-xl flex items-center justify-center",
+                      badge.warning ? "bg-amber-100 text-amber-600" : "bg-primary/10 text-primary"
+                    )}>
+                      <ShieldCheck className="size-6" />
+                    </div>
+                    <div>
+                      <p className="font-bold">{badge.name}</p>
+                      <p className="text-xs text-muted-foreground flex items-center gap-1">
+                        Expires: {badge.expiry} 
+                        {badge.warning && <Badge variant="destructive" className="h-4 text-[8px] px-1">Expiring Soon</Badge>}
+                      </p>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </section>
         </div>
 
         <div className="space-y-8">
           <AIAssistanceCard />
-          
-          <Card className="bg-primary text-primary-foreground overflow-hidden relative">
-            <CardHeader className="relative z-10">
-              <CardTitle>Pro Tips</CardTitle>
-              <CardDescription className="text-primary-foreground/70">Increase your proposal acceptance rate.</CardDescription>
-            </CardHeader>
-            <CardContent className="relative z-10 space-y-4">
-              <div className="flex gap-3">
-                <div className="size-6 rounded-full bg-white/20 flex items-center justify-center shrink-0">1</div>
-                <p className="text-sm">Use the AI workspace to summarize long technical specs for executives.</p>
-              </div>
-              <div className="flex gap-3">
-                <div className="size-6 rounded-full bg-white/20 flex items-center justify-center shrink-0">2</div>
-                <p className="text-sm">Include historical performance data in your proposals.</p>
-              </div>
-            </CardContent>
-            <Sparkles className="absolute -bottom-4 -right-4 size-24 text-white/10 rotate-12" />
-          </Card>
         </div>
       </div>
+
+      <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>{actionType === 'accept' ? 'Accept Proposal' : 'Reject Proposal'}</DialogTitle>
+            <DialogDescription>
+              {actionType === 'accept' 
+                ? 'Are you ready to begin integration for this project? This will notify the manufacturer.'
+                : 'Please provide a reason for rejecting this proposal.'}
+            </DialogDescription>
+          </DialogHeader>
+          {actionType === 'reject' && (
+            <div className="py-4">
+              <Textarea 
+                placeholder="e.g., Resource constraints for the requested timeline..." 
+                value={reason} 
+                onChange={(e) => setReason(e.target.value)}
+              />
+            </div>
+          )}
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setIsModalOpen(false)}>Cancel</Button>
+            <Button onClick={confirmAction}>Confirm</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
