@@ -10,7 +10,9 @@ import {
   LogOut, 
   Search,
   ChevronDown,
-  Bell
+  Bell,
+  Home,
+  ExternalLink
 } from 'lucide-react';
 import { useRole, UserRole } from '@/context/role-context';
 import { cn } from '@/lib/utils';
@@ -37,6 +39,7 @@ import {
 } from '@/components/ui/sidebar';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 
 interface AppShellProps {
   children: React.ReactNode;
@@ -60,17 +63,11 @@ export function AppShell({ children }: AppShellProps) {
 
     switch (role) {
       case 'ADMIN':
-        return [
-          ...common,
-        ];
+        return [...common];
       case 'MANUFACTURER':
-        return [
-          ...common,
-        ];
+        return [...common];
       case 'SI_PARTNER':
-        return [
-          ...common,
-        ];
+        return [...common];
       case 'BUYER':
       default:
         return [
@@ -147,6 +144,17 @@ export function AppShell({ children }: AppShellProps) {
             </div>
 
             <div className="flex items-center gap-2 sm:gap-4">
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button variant="ghost" size="icon" className="rounded-full hidden sm:flex" asChild>
+                    <Link href="/">
+                      <Home className="size-5" />
+                    </Link>
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>Home Dashboard</TooltipContent>
+              </Tooltip>
+
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="outline" size="sm" className="hidden sm:flex gap-2 rounded-xl">
@@ -190,10 +198,17 @@ export function AppShell({ children }: AppShellProps) {
                     </div>
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
+                  <DropdownMenuItem asChild>
+                    <Link href="/" className="flex items-center gap-2">
+                      <ExternalLink className="size-4" /> View Landing Page
+                    </Link>
+                  </DropdownMenuItem>
                   <DropdownMenuItem>Profile</DropdownMenuItem>
                   <DropdownMenuItem>Settings</DropdownMenuItem>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem className="text-destructive" onClick={handleSignOut}>Log out</DropdownMenuItem>
+                  <DropdownMenuItem className="text-destructive" onClick={handleSignOut}>
+                    <LogOut className="size-4 mr-2" /> Log out
+                  </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
