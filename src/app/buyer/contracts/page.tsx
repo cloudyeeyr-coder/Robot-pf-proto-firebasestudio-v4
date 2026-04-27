@@ -5,17 +5,15 @@ import React from 'react';
 import { useRouter } from 'next/navigation';
 import { AppShell } from '@/components/layout/app-shell';
 import { MOCK_CONTRACTS, Contract } from '@/lib/mock-data';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { 
   FileText, 
   CreditCard, 
   ShieldCheck, 
-  AlertCircle, 
   ArrowRight,
-  Clock,
-  CheckCircle2
+  Clock
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -25,13 +23,13 @@ export default function BuyerContractsPage() {
   const getStatusBadge = (status: Contract['status']) => {
     switch (status) {
       case 'payment_pending':
-        return <Badge variant="outline" className="text-amber-600 border-amber-200 bg-amber-50">결제 대기</Badge>;
+        return <Badge variant="outline" className="text-amber-600 border-amber-200 bg-amber-50">Payment Pending</Badge>;
       case 'escrow_held':
-        return <Badge variant="default" className="bg-emerald-500">에스크로 보호중</Badge>;
+        return <Badge variant="default" className="bg-emerald-500">Escrow Protected</Badge>;
       case 'completed':
-        return <Badge variant="secondary">완료</Badge>;
+        return <Badge variant="secondary">Completed</Badge>;
       case 'disputed':
-        return <Badge variant="destructive">분쟁 중</Badge>;
+        return <Badge variant="destructive">Disputed</Badge>;
       default:
         return <Badge variant="outline">{status}</Badge>;
     }
@@ -45,7 +43,7 @@ export default function BuyerContractsPage() {
           className="gap-2" 
           onClick={() => router.push(`/contracts/${contract.id}/payment`)}
         >
-          <CreditCard className="size-4" /> 결제하기
+          <CreditCard className="size-4" /> Pay Now
         </Button>
       );
     }
@@ -57,7 +55,7 @@ export default function BuyerContractsPage() {
           className="gap-2" 
           onClick={() => router.push(`/contracts/${contract.id}/payment/status`)}
         >
-          <ShieldCheck className="size-4" /> 상태 확인
+          <ShieldCheck className="size-4" /> Check Status
         </Button>
       );
     }
@@ -69,7 +67,7 @@ export default function BuyerContractsPage() {
           className="gap-2 text-primary" 
           onClick={() => router.push(`/contracts/${contract.id}/warranty`)}
         >
-          <FileText className="size-4" /> 보증서 보기
+          <FileText className="size-4" /> View Warranty
         </Button>
       );
     }
@@ -80,8 +78,8 @@ export default function BuyerContractsPage() {
     <AppShell>
       <div className="max-w-5xl mx-auto space-y-8">
         <div>
-          <h1 className="text-3xl font-extrabold tracking-tight">내 계약 관리</h1>
-          <p className="text-muted-foreground mt-2">진행 중인 모든 프로젝트 계약과 결제 상태를 관리합니다.</p>
+          <h1 className="text-3xl font-extrabold tracking-tight">My Contracts</h1>
+          <p className="text-muted-foreground mt-2">Manage all project contracts and payment statuses.</p>
         </div>
 
         <div className="grid grid-cols-1 gap-4">
@@ -104,8 +102,8 @@ export default function BuyerContractsPage() {
                       </div>
                       <p className="text-sm text-muted-foreground">{contract.partnerName}</p>
                       <div className="flex items-center gap-4 text-xs text-muted-foreground pt-1">
-                        <span className="flex items-center gap-1"><Clock className="size-3" /> 생성일: {contract.createdAt}</span>
-                        <span className="font-bold text-primary">₩{contract.amount.toLocaleString()}</span>
+                        <span className="flex items-center gap-1"><Clock className="size-3" /> Created: {contract.createdAt}</span>
+                        <span className="font-bold text-primary">${contract.amount.toLocaleString()}</span>
                       </div>
                     </div>
                   </div>

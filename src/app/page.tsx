@@ -46,10 +46,10 @@ export default function HomePage() {
            </Link>
            <div className="flex items-center gap-4">
              <Link href="/login">
-               <Button variant="ghost" className="font-bold hidden sm:flex">로그인</Button>
+               <Button variant="ghost" className="font-bold hidden sm:flex">Login</Button>
              </Link>
              <Link href="/signup/buyer">
-               <Button className="font-bold rounded-xl px-6 shadow-md">무료로 시작하기</Button>
+               <Button className="font-bold rounded-xl px-6 shadow-md">Get Started for Free</Button>
              </Link>
            </div>
         </header>
@@ -60,23 +60,23 @@ export default function HomePage() {
             Enterprise Ecosystem Platform
           </Badge>
           <h1 className="text-5xl md:text-7xl font-black tracking-tight mb-8 text-slate-900 leading-[1.1] animate-fade-in">
-            산업 생태계를 연결하는 <br /> 
-            <span className="text-primary italic">신뢰의 플랫폼</span>
+            Connecting Industry <br /> 
+            <span className="text-primary italic">through Trust</span>
           </h1>
           <p className="text-xl text-slate-600 mb-12 max-w-2xl leading-relaxed animate-fade-in" style={{ animationDelay: '0.1s' }}>
-            수요기업, 제조사, SI 파트너가 한곳에 모여 안전하게 계약하고 성장합니다.
-            에스크로와 전자 보증서로 비즈니스의 모든 리스크를 관리하세요.
+            Buyers, Manufacturers, and SI Partners collaborate securely in one place.
+            Manage all business risks with Escrow and E-Warranty.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto animate-fade-in" style={{ animationDelay: '0.2s' }}>
             <Link href="/login">
               <Button size="lg" className="h-16 px-10 rounded-2xl text-lg font-bold gap-2 shadow-2xl shadow-primary/30 w-full sm:w-auto hover:scale-105 transition-transform">
-                로그인하여 시작하기 <ArrowRight className="size-5" />
+                Login to Start <ArrowRight className="size-5" />
               </Button>
             </Link>
             <Link href="/signup/buyer">
               <Button size="lg" variant="outline" className="h-16 px-10 rounded-2xl text-lg font-bold border-2 w-full sm:w-auto bg-white hover:bg-slate-50">
-                수요기업 회원가입
+                Sign Up as Buyer
               </Button>
             </Link>
           </div>
@@ -84,9 +84,9 @@ export default function HomePage() {
           {/* Features Grid */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-28 w-full animate-fade-in" style={{ animationDelay: '0.3s' }}>
             {[
-              { icon: Zap, title: "신속한 매칭", desc: "검증된 SI 파트너 디렉토리에서 프로젝트에 최적화된 업체를 즉시 찾으세요." },
-              { icon: ShieldCheck, title: "에스크로 보호", desc: "계약 대금을 안전하게 예치하고 시공 완료 시점에 안전하게 정산합니다." },
-              { icon: Users, title: "통합 관리", desc: "계약 체결부터 결제 상태, AS 보증서까지 하나의 대시보드에서 통합 관리하세요." }
+              { icon: Zap, title: "Fast Matching", desc: "Instantly find the best partners from our verified SI directory." },
+              { icon: ShieldCheck, title: "Escrow Protection", desc: "Securely deposit contract funds and settle upon project completion." },
+              { icon: Users, title: "Integrated Management", desc: "Manage contracts, payments, and warranties in one unified dashboard." }
             ].map((feature, i) => (
               <div key={i} className="bg-white p-10 rounded-[32px] border border-slate-100 shadow-sm text-left space-y-5 hover:shadow-xl transition-all hover:-translate-y-1">
                 <div className="size-14 bg-slate-50 rounded-2xl flex items-center justify-center text-primary">

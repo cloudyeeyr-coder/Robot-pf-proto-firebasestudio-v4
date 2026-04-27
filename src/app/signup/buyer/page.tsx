@@ -16,12 +16,12 @@ import { ArrowLeft, Loader2 } from 'lucide-react';
 import Link from 'next/link';
 
 const buyerSignupSchema = z.object({
-  companyName: z.string().min(2, "회사명은 2자 이상이어야 합니다."),
-  businessNumber: z.string().regex(/^\d{3}-\d{2}-\d{5}$/, "사업자 번호 형식: 000-00-00000"),
-  representative: z.string().min(2, "대표자 성함을 입력해 주세요."),
-  phone: z.string().regex(/^\d{2,3}-\d{3,4}-\d{4}$/, "전화번호 형식: 000-0000-0000"),
-  email: z.string().email("유효한 이메일 주소를 입력해 주세요."),
-  password: z.string().min(8, "비밀번호는 8자 이상이어야 합니다."),
+  companyName: z.string().min(2, "Company name must be at least 2 characters."),
+  businessNumber: z.string().regex(/^\d{3}-\d{2}-\d{5}$/, "Format: 000-00-00000"),
+  representative: z.string().min(2, "Please enter representative name."),
+  phone: z.string().regex(/^\d{2,3}-\d{3,4}-\d{4}$/, "Format: 000-0000-0000"),
+  email: z.string().email("Please enter a valid email address."),
+  password: z.string().min(8, "Password must be at least 8 characters."),
 });
 
 type BuyerSignupValues = z.infer<typeof buyerSignupSchema>;
@@ -49,12 +49,12 @@ export default function BuyerSignupPage() {
     setIsSubmitting(true);
     setTimeout(() => {
       if (data.email === 'duplicate@example.com') {
-        form.setError('email', { message: '이미 등록된 이메일입니다.' });
-        toast({ title: "등록 실패", description: "중복된 이메일 주소입니다.", variant: "destructive" });
+        form.setError('email', { message: 'This email is already registered.' });
+        toast({ title: "Registration Failed", description: "Duplicate email address.", variant: "destructive" });
       } else {
         localStorage.setItem('rolehub_logged_in', 'true');
         setRole('BUYER');
-        toast({ title: "가입 성공!", description: `${data.companyName}님 환영합니다!` });
+        toast({ title: "Welcome!", description: `Registration successful for ${data.companyName}!` });
         router.push('/');
       }
       setIsSubmitting(false);
@@ -80,10 +80,10 @@ export default function BuyerSignupPage() {
       <Card className="w-full max-w-md shadow-2xl border-none rounded-3xl overflow-hidden">
         <CardHeader className="bg-white p-8 pb-4">
           <Link href="/" className="flex items-center text-sm text-muted-foreground hover:text-primary transition-colors mb-6 group">
-            <ArrowLeft className="mr-2 size-4 group-hover:-translate-x-1 transition-transform" /> 홈으로 돌아가기
+            <ArrowLeft className="mr-2 size-4 group-hover:-translate-x-1 transition-transform" /> Back to Home
           </Link>
-          <CardTitle className="text-3xl font-black tracking-tight">수요기업 회원가입</CardTitle>
-          <CardDescription className="text-base">RoleHub와 함께 신뢰할 수 있는 비즈니스를 시작해 보세요.</CardDescription>
+          <CardTitle className="text-3xl font-black tracking-tight">Buyer Sign Up</CardTitle>
+          <CardDescription className="text-base">Start your trusted business with RoleHub today.</CardDescription>
         </CardHeader>
         <CardContent className="p-8 pt-4">
           <Form {...form}>
@@ -93,8 +93,8 @@ export default function BuyerSignupPage() {
                 name="companyName"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>회사명</FormLabel>
-                    <FormControl><Input className="h-11 rounded-xl" placeholder="주식회사 테크솔루션" {...field} /></FormControl>
+                    <FormLabel>Company Name</FormLabel>
+                    <FormControl><Input className="h-11 rounded-xl" placeholder="Tech Solutions Inc." {...field} /></FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -104,7 +104,7 @@ export default function BuyerSignupPage() {
                 name="businessNumber"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>사업자 등록 번호</FormLabel>
+                    <FormLabel>Business Reg. Number</FormLabel>
                     <FormControl>
                       <Input 
                         className="h-11 rounded-xl"
@@ -122,8 +122,8 @@ export default function BuyerSignupPage() {
                 name="representative"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>대표자명</FormLabel>
-                    <FormControl><Input className="h-11 rounded-xl" placeholder="홍길동" {...field} /></FormControl>
+                    <FormLabel>Representative Name</FormLabel>
+                    <FormControl><Input className="h-11 rounded-xl" placeholder="John Doe" {...field} /></FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -133,7 +133,7 @@ export default function BuyerSignupPage() {
                 name="phone"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>연락처</FormLabel>
+                    <FormLabel>Phone Number</FormLabel>
                     <FormControl>
                       <Input 
                         className="h-11 rounded-xl"
@@ -151,7 +151,7 @@ export default function BuyerSignupPage() {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>이메일</FormLabel>
+                    <FormLabel>Email</FormLabel>
                     <FormControl><Input className="h-11 rounded-xl" type="email" placeholder="contact@company.com" {...field} /></FormControl>
                     <FormMessage />
                   </FormItem>
@@ -162,20 +162,20 @@ export default function BuyerSignupPage() {
                 name="password"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>비밀번호</FormLabel>
-                    <FormControl><Input className="h-11 rounded-xl" type="password" placeholder="8자 이상 입력" {...field} /></FormControl>
+                    <FormLabel>Password</FormLabel>
+                    <FormControl><Input className="h-11 rounded-xl" type="password" placeholder="At least 8 characters" {...field} /></FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
               <Button type="submit" className="w-full h-12 text-lg font-bold mt-6 rounded-xl shadow-lg shadow-primary/20" disabled={isSubmitting}>
-                {isSubmitting ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : "가입하기"}
+                {isSubmitting ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : "Sign Up"}
               </Button>
             </form>
           </Form>
         </CardContent>
         <CardFooter className="flex justify-center border-t p-6 bg-slate-50/50">
-          <p className="text-sm text-muted-foreground">이미 계정이 있으신가요? <Link href="/login" className="text-primary font-bold hover:underline">로그인</Link></p>
+          <p className="text-sm text-muted-foreground">Already have an account? <Link href="/login" className="text-primary font-bold hover:underline">Login</Link></p>
         </CardFooter>
       </Card>
     </div>

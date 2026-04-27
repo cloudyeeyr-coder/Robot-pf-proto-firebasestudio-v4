@@ -31,29 +31,29 @@ export default function LoginPage() {
   const ROLES = [
     { 
       id: 'BUYER' as UserRole, 
-      title: '수요기업 (Buyer)', 
-      desc: '프로젝트 발주 및 계약 관리', 
+      title: 'Buyer', 
+      desc: 'Project orders and contract management', 
       icon: User,
       color: 'bg-slate-100 text-slate-900 border-slate-200'
     },
     { 
       id: 'SI_PARTNER' as UserRole, 
-      title: 'SI 파트너', 
-      desc: '제안서 작성 및 프로젝트 수행', 
+      title: 'SI Partner', 
+      desc: 'Proposal writing and project execution', 
       icon: Briefcase,
       color: 'bg-blue-50 text-blue-700 border-blue-100'
     },
     { 
       id: 'MANUFACTURER' as UserRole, 
-      title: '제조사 (Manufacturer)', 
-      desc: '생산 공정 및 재고 관리', 
+      title: 'Manufacturer', 
+      desc: 'Production processes and inventory', 
       icon: Factory,
       color: 'bg-emerald-50 text-emerald-700 border-emerald-100'
     },
     { 
       id: 'ADMIN' as UserRole, 
-      title: '관리자 (Admin)', 
-      desc: '플랫폼 운영 및 정산 관리', 
+      title: 'Admin', 
+      desc: 'Platform operations and settlement', 
       icon: ShieldCheck,
       color: 'bg-indigo-50 text-indigo-700 border-indigo-100'
     },
@@ -64,15 +64,15 @@ export default function LoginPage() {
       <div className="w-full max-w-4xl space-y-8">
         <div className="text-center space-y-4">
           <Link href="/" className="inline-flex items-center text-sm text-muted-foreground hover:text-primary transition-colors group">
-            <ArrowLeft className="mr-2 size-4 group-hover:-translate-x-1 transition-transform" /> 홈으로 돌아가기
+            <ArrowLeft className="mr-2 size-4 group-hover:-translate-x-1 transition-transform" /> Back to Home
           </Link>
           <div className="flex justify-center">
             <div className="size-16 bg-primary rounded-2xl flex items-center justify-center shadow-2xl shadow-primary/30">
               <LayoutDashboard className="text-white size-8" />
             </div>
           </div>
-          <h1 className="text-4xl font-black tracking-tight text-slate-900">로그인</h1>
-          <p className="text-slate-500 text-lg">접속하실 사용자 유형을 선택해 주세요.</p>
+          <h1 className="text-4xl font-black tracking-tight text-slate-900">Login</h1>
+          <p className="text-slate-500 text-lg">Select your user type to continue.</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -97,7 +97,7 @@ export default function LoginPage() {
 
         <div className="text-center">
           <p className="text-slate-400 text-sm">
-            계정이 없으신가요? <Link href="/signup/buyer" className="text-primary font-bold hover:underline">수요기업으로 시작하기</Link>
+            Don't have an account? <Link href="/signup/buyer" className="text-primary font-bold hover:underline">Start as a Buyer</Link>
           </p>
         </div>
       </div>
